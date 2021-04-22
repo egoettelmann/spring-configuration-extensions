@@ -7,10 +7,52 @@
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-value-annotation-processor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <name>Spring Value Annotation Processor</name>
+    <description>Annotation processor to extract all configuration properties injected through Spring @Value annotations</description>
+
+    <!-- Project URL -->
+    <url>https://github.com/egoettelmann/spring-value-annotation-processor</url>
+
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Git -->
+    <scm>
+        <connection>scm:git:https://github.com/egoettelmann/spring-value-annotation-processor.git</connection>
+        <url>https://github.com/egoettelmann/spring-value-annotation-processor</url>
+    </scm>
+
+    <!-- Repositories -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- Developers -->
+    <developers>
+        <developer>
+            <name>Elio Goettelmann</name>
+            <email>elio.goettelmann@gmail.com</email>
+            <organizationUrl>https://github.com/egoettelmann</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -23,6 +65,7 @@
         </dependency>
     </dependencies>
 
+    <!-- Build -->
     <build>
         <plugins>
             <!-- Disable annotation processing to prevent cyclic dependency on itself -->
@@ -34,6 +77,70 @@
                     <proc>none</proc>
                 </configuration>
             </plugin>
+
+            <!-- Release to Maven Central (staging) -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                </configuration>
+            </plugin>
+
+            <!-- Attach sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Attach Javadoc-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <source>8</source>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Sign the artifacts -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
     </build>
+
+
 </project>
