@@ -6,7 +6,7 @@ Spring Value Annotation Processor
 
 An annotation processor to extract all configuration properties injected through Spring `@Value` annotations.
 
-It generates a `spring-configuration-metadata.json` respecting the [Configuration Metadata](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-configuration-metadata.html) format defined by Spring Boot.
+It generates a `spring-configuration-metadata.json` conforming to the [Configuration Metadata](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-configuration-metadata.html) format defined by Spring Boot.
 
 Goal of this project
 ----------
