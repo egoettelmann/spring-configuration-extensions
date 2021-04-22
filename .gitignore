@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+yarn.lock
+target/
+node/
+
+# Idea
+.idea/
+*.iml
+
+# Eclipse
+.classpath
+.project
+.settings/
