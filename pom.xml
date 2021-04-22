@@ -6,7 +6,7 @@
 
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-value-annotation-processor</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>Spring Value Annotation Processor</name>
     <description>Annotation processor to extract all configuration properties injected through Spring @Value annotations</description>
 
