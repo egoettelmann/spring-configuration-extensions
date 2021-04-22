@@ -77,9 +77,9 @@ jobs:
           name: "Clean package"
           command: mvn clean package
       - persist_to_workspace:
-        root: .
-        paths:
-          - .
+          root: .
+          paths:
+            - .
 
   # Deploy the artifact to Maven Central (staging)
   deploy:
