@@ -24,7 +24,7 @@ public class JsonWriter {
             return;
         }
         try {
-            writer.write("[");
+            writer.write("{\"properties\":[");
             int i = 0;
             for (ValueAnnotationMetadata metadata : metadataList) {
                 if (i > 0) {
@@ -43,7 +43,7 @@ public class JsonWriter {
                 writer.write("}");
                 i++;
             }
-            writer.write("]");
+            writer.write("]}");
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }

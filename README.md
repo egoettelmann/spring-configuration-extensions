@@ -18,7 +18,7 @@ Documentation is difficult to keep up to date and becomes easily outdated.
 
 This annotation processor allows to automatically extract all configuration properties at build time.
 The generated file(s) can be used to:
- - add auto-completion of configuration files in your IDEA
+ - add auto-completion of configuration files in your IDE
  - expose possible configuration properties through your app like Spring Boot Actuator does
  - analyze the project's dependencies on configuration properties
  - generate documentation
@@ -69,3 +69,5 @@ The plugin's configuration should look to something like the following:
     </configuration>
 </plugin>
 ```
+
+After executing `mvn clean package`, you can find the `spring-configuration-metadata.json` file under `target/classes/META-INF/`.

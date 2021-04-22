@@ -24,13 +24,12 @@ import java.util.Set;
  *    - failOnError: allows to ignore any exception occurring during processing
  *    - targetPath: customize output path
  *    - targetFile: customize output file name
- *  - change TARGET_PACKAGE to output file somewhere else
  */
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
     private static final String TARGET_PACKAGE = "";
-    private static final String TARGET_FILE_NAME = "spring-configuration-metadata.json";
+    private static final String TARGET_FILE_NAME = "META-INF/spring-configuration-metadata.json";
 
     private ElementReader elementReader;
 
@@ -73,7 +72,7 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
     private Writer getFileWriter() throws IOException {
         return processingEnv.getFiler()
                 .createResource(
-                        StandardLocation.SOURCE_OUTPUT,
+                        StandardLocation.CLASS_OUTPUT,
                         TARGET_PACKAGE,
                         TARGET_FILE_NAME
                 ).openWriter();
