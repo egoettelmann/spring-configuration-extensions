@@ -4,7 +4,7 @@ version: 2.1
 parameters:
   docker-image:
     type: string
-    default: "circleci/openjdk:11-jdk"
+    default: "cimg/openjdk:8.0"
   branch-release:
     type: string
     default: "release"
@@ -23,9 +23,8 @@ parameters:
 # Additionally, following variables need to be defined:
 # - SONATYPE_USERNAME
 # - SONATYPE_PASSWORD
-# - GPG_EXECUTABLE
 # - GPG_PASSPHRASE
-# - GPG_OWNERTRUST
+# - GPG_PUBLIC_KEYS
 # - GPG_SECRET_KEYS
 # - GITHUB_TOKEN
 
@@ -97,8 +96,8 @@ jobs:
       - run:
           name: "Deploy to Maven Central"
           command: |
-            echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import --no-tty --batch --yes
-            echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust --no-tty --batch --yes
+            echo $GPG_SECRET_KEYS | base64 --decode | gpg --import --no-tty --batch --yes
+            echo $GPG_PUBLIC_KEYS | base64 --decode | gpg --import --no-tty --batch --yes
             echo use-agent >> ~/.gnupg/gpg.conf
             echo pinentry-mode loopback >> ~/.gnupg/gpg.conf
             echo allow-loopback-pinentry >> ~/.gnupg/gpg-agent.conf
