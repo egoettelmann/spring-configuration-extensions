@@ -2,11 +2,11 @@ Spring Value Annotation Processor
 ==========
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.egoettelmann/spring-value-annotation-processor?style=flat-square&label=Maven%20Central)](https://search.maven.org/artifact/com.github.egoettelmann/spring-value-annotation-processor)
-![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-value-annotation-processor/develop?label=Develop&style=flat-square)
+[![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-value-annotation-processor/develop?label=Develop&style=flat-square)](https://app.circleci.com/pipelines/github/egoettelmann/spring-value-annotation-processor?branch=develop)
 
 An annotation processor to extract all configuration properties injected through Spring `@Value` annotations.
 
-It generates a `spring-configuration-metadata.json` conforming to the [Configuration Metadata](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-configuration-metadata.html) format defined by Spring Boot.
+It generates a `additional-spring-configuration-metadata.json` conforming to the [Configuration Metadata](https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-configuration-metadata.html) format defined by Spring Boot.
 
 Goal of this project
 ----------
@@ -70,4 +70,4 @@ The plugin's configuration should look to something like the following:
 </plugin>
 ```
 
-After executing `mvn clean package`, you can find the `spring-configuration-metadata.json` file under `target/classes/META-INF/`.
+After executing `mvn clean package`, you can find the `additional-spring-configuration-metadata.json` file under `target/classes/META-INF/`.

@@ -29,7 +29,7 @@ import java.util.Set;
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
     private static final String TARGET_PACKAGE = "";
-    private static final String TARGET_FILE_NAME = "META-INF/spring-configuration-metadata.json";
+    private static final String TARGET_FILE_NAME = "META-INF/additional-spring-configuration-metadata.json";
 
     private ElementReader elementReader;
 
