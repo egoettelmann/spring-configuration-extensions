@@ -66,7 +66,6 @@ public class ValueAnnotationMetadataBuilder {
     }
 
     private static Optional<String> extractPropertyDefinition(final String rawValue) {
-        // TODO: no match should probably be an error
         final Matcher matcher = PATTERN.matcher(rawValue);
         if (matcher.find()) {
             return Optional.ofNullable(

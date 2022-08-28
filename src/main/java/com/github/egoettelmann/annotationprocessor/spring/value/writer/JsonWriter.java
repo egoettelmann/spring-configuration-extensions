@@ -54,7 +54,18 @@ public class JsonWriter {
             this.writer.write(String.format("\"%s\": null", key));
             return;
         }
-        this.writer.write(String.format("\"%s\": \"%s\"", key, value));
+        this.writer.write(String.format("\"%s\": \"%s\"", key, JsonWriter.sanitize(value)));
+    }
+
+    private static String sanitize(String s){
+        return s.replace("\\", "\\\\")
+                .replace("\t", "\\t")
+                .replace("\b", "\\b")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\f", "\\f")
+                .replace("\"", "\\\"")
+                .trim();
     }
 
 }
