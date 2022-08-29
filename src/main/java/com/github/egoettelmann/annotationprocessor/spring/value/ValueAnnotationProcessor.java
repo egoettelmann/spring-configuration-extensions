@@ -5,12 +5,10 @@ import com.github.egoettelmann.annotationprocessor.spring.value.exceptions.Value
 import com.github.egoettelmann.annotationprocessor.spring.value.reader.ElementReader;
 import com.github.egoettelmann.annotationprocessor.spring.value.writer.JsonWriter;
 
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.*;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 import javax.tools.StandardLocation;
 import java.io.IOException;
 import java.io.Writer;
@@ -19,16 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * TODO:
- *  - add configuration options (checkout: https://stackoverflow.com/a/53274771):
- *    - failOnError: allows to ignore any exception occurring during processing
- *      - but processing should continue
- *      - logging: https://cloudogu.com/en/blog/Java-Annotation-Processors_1-Intro
- *    - targetPath: customize output path
- *    - targetFile: customize output file name
- */
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
+@SupportedOptions({"failOnError"})
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
     private static final String TARGET_PACKAGE = "";
@@ -36,10 +26,14 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
 
     private ElementReader elementReader;
 
+    private boolean failOnError = false;
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         this.elementReader = new ElementReader(processingEnv.getElementUtils());
+        final String failOnError = processingEnv.getOptions().get("failOnError");
+        this.failOnError = Boolean.parseBoolean(failOnError);
     }
 
     @Override
@@ -48,20 +42,24 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
             return false;
         }
         final List<ValueAnnotationMetadata> metadataList = new ArrayList<>();
-        try {
-            for (TypeElement annotation : annotations) {
-                for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
+        for (final TypeElement annotation : annotations) {
+            for (final Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
+                try {
                     final Optional<ValueAnnotationMetadata> metadata = this.elementReader.read(element);
                     if (!metadata.isPresent()) {
                         continue;
                     }
                     metadataList.add(metadata.get());
+                } catch (final Exception e) {
+                    final String errorMessage = "Error while processing Value annotations on " + element.getSimpleName();
+                    if (this.failOnError) {
+                        throw new ValueAnnotationException(errorMessage, e);
+                    }
+                    this.processingEnv.getMessager().printMessage(Diagnostic.Kind.WARNING, errorMessage);
                 }
             }
-            this.writeToTargetFile(metadataList);
-        } catch (final Exception e) {
-            throw new ValueAnnotationException("Error while processing Value annotations", e);
         }
+        this.writeToTargetFile(metadataList);
         return false;
     }
 

@@ -71,3 +71,31 @@ The plugin's configuration should look to something like the following:
 ```
 
 After executing `mvn clean package`, you can find the `additional-spring-configuration-metadata.json` file under `target/classes/META-INF/`.
+
+### Additional compiler options
+
+Following additional option is available: `failOnError`.
+This option is by default `false`.
+If defined at `true`, the annotation processor will fail if a property cannot be parsed.
+
+Configuration would be as follows:
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.1</version>
+    <configuration>
+        <annotationProcessorPaths>
+            <!-- in addition to any other annotation processor (like Lombok, etc.) -->
+            <annotationProcessorPath>
+                <groupId>com.github.egoettelmann</groupId>
+                <artifactId>spring-value-annotation-processor</artifactId>
+                <version>0.0.4-SNAPSHOT</version>
+            </annotationProcessorPath>
+        </annotationProcessorPaths>
+        <compilerArgs>
+            <arg>-AfailOnError=true</arg>
+        </compilerArgs>
+    </configuration>
+</plugin>
+```
