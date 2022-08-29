@@ -1,80 +1,103 @@
 package com.github.egoettelmann.annotationprocessor.spring.value.core;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 public class ValueAnnotationMetadataBuilderTest {
 
     @Test
     public void testSimpleDefinition() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("${custom.property}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertNull(metadata.getDefaultValue(), "Default value should not be defined");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertNull(metadata.get().getDefaultValue(), "Default value should not be defined");
     }
 
     @Test
     public void testSimpleDefinitionWithDefaultValue() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("${custom.property:defaultVal}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertEquals("defaultVal", metadata.getDefaultValue(), "Wrong default value");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertEquals("defaultVal", metadata.get().getDefaultValue(), "Wrong default value");
     }
 
     @Test
     public void testDefinitionWithSpecialCharacters() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("${custom.property-path.upperCase.with_underscores.dot}")
                 .build();
-        Assertions.assertEquals("custom.property-path.upperCase.with_underscores.dot", metadata.getName(), "Wrong name");
-        Assertions.assertNull(metadata.getDefaultValue(), "Default value should not be defined");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property-path.upperCase.with_underscores.dot", metadata.get().getName(), "Wrong name");
+        Assertions.assertNull(metadata.get().getDefaultValue(), "Default value should not be defined");
     }
 
     @Test
     public void testSpelDefinition() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("#{${custom.property}}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertNull(metadata.getDefaultValue(), "Default value should not be defined");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertNull(metadata.get().getDefaultValue(), "Default value should not be defined");
     }
 
     @Test
     public void testSpelDefinitionWithMethodCall() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("#{'${custom.property}'.split(',')}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertNull(metadata.getDefaultValue(), "Default value should not be defined");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertNull(metadata.get().getDefaultValue(), "Default value should not be defined");
     }
 
     @Test
     public void testSpelDefinitionWithSpace() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("#{new ${custom.property}()}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertNull(metadata.getDefaultValue(), "Default value should not be defined");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertNull(metadata.get().getDefaultValue(), "Default value should not be defined");
     }
 
     @Test
     public void testSpelDefinitionWithMethodCallAndDefaultValue() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("#{'${custom.property:defaultVal}'.split(',')}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertEquals("defaultVal", metadata.getDefaultValue(), "Wrong default value");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertEquals("defaultVal", metadata.get().getDefaultValue(), "Wrong default value");
     }
 
     @Test
     public void testSpelDefinitionWithSpaceAndDefaultValue() {
-        ValueAnnotationMetadata metadata = ValueAnnotationMetadataBuilder
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
                 .of("#{new ${custom.property:defaultVal}()}")
                 .build();
-        Assertions.assertEquals("custom.property", metadata.getName(), "Wrong name");
-        Assertions.assertEquals("defaultVal", metadata.getDefaultValue(), "Wrong default value");
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property", metadata.get().getName(), "Wrong name");
+        Assertions.assertEquals("defaultVal", metadata.get().getDefaultValue(), "Wrong default value");
+    }
+
+    @Disabled("Disabled until value parser supports extracting multiple values")
+    @Test
+    public void testSpelDefinitionWithMultipleValues() {
+        final Optional<ValueAnnotationMetadata> metadata = ValueAnnotationMetadataBuilder
+                .of("#{new FakeConstructor(${custom.property1:defaultVal}, ${custom.property2:defaultVal})}")
+                .build();
+        Assertions.assertTrue(metadata.isPresent(), "Metadata should not be null");
+        Assertions.assertEquals("custom.property1", metadata.get().getName(), "Wrong name");
+        Assertions.assertEquals("custom.property2", metadata.get().getName(), "Wrong name");
+        Assertions.assertEquals("defaultVal", metadata.get().getDefaultValue(), "Wrong default value");
     }
 
 }

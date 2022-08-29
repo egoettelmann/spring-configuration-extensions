@@ -1,7 +1,5 @@
 package com.github.egoettelmann.annotationprocessor.spring.value.core;
 
-import com.github.egoettelmann.annotationprocessor.spring.value.exceptions.ValueAnnotationException;
-
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,7 +38,7 @@ public class ValueAnnotationMetadataBuilder {
         return this;
     }
 
-    public ValueAnnotationMetadata build() {
+    public Optional<ValueAnnotationMetadata> build() {
         ValueAnnotationMetadata metadata = new ValueAnnotationMetadata();
 
         // Adding metadata
@@ -51,28 +49,32 @@ public class ValueAnnotationMetadataBuilder {
         // Extracting property name
         final Optional<String> definition = extractPropertyDefinition(this.rawValue);
         if (!definition.isPresent()) {
-            throw new ValueAnnotationException("Could not extract property definition from value: " + this.rawValue);
+            return Optional.empty();
         }
         final String definitionValue = definition.get();
-        final String[] values = definitionValue.split(DEFAULT_VALUE_SEPARATOR);
-        metadata.setName(values[0]);
+        final String[] values = definitionValue.split(DEFAULT_VALUE_SEPARATOR, 2);
+        metadata.setName(values[0].trim());
 
         // Extracting default value of defined
         if (values.length > 1) {
-            metadata.setDefaultValue(values[1]);
+            metadata.setDefaultValue(values[1].trim());
         }
 
-        return metadata;
+        return Optional.of(metadata);
     }
 
     private static Optional<String> extractPropertyDefinition(final String rawValue) {
         final Matcher matcher = PATTERN.matcher(rawValue);
-        if (matcher.find()) {
-            return Optional.ofNullable(
-                    matcher.group(1)
-            );
+        if (!matcher.find()) {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+        final String match = matcher.group(1);
+        if (match == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(match.trim());
     }
 
 }

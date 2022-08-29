@@ -1,7 +1,7 @@
 package com.github.egoettelmann.annotationprocessor.spring.value;
 
-import com.github.egoettelmann.annotationprocessor.spring.value.exceptions.ValueAnnotationException;
 import com.github.egoettelmann.annotationprocessor.spring.value.core.ValueAnnotationMetadata;
+import com.github.egoettelmann.annotationprocessor.spring.value.exceptions.ValueAnnotationException;
 import com.github.egoettelmann.annotationprocessor.spring.value.reader.ElementReader;
 import com.github.egoettelmann.annotationprocessor.spring.value.writer.JsonWriter;
 
@@ -16,12 +16,15 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
  * TODO:
  *  - add configuration options (checkout: https://stackoverflow.com/a/53274771):
  *    - failOnError: allows to ignore any exception occurring during processing
+ *      - but processing should continue
+ *      - logging: https://cloudogu.com/en/blog/Java-Annotation-Processors_1-Intro
  *    - targetPath: customize output path
  *    - targetFile: customize output file name
  */
@@ -44,24 +47,26 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
         if (annotations.isEmpty()) {
             return false;
         }
-        List<ValueAnnotationMetadata> metadataList = new ArrayList<>();
+        final List<ValueAnnotationMetadata> metadataList = new ArrayList<>();
         try {
             for (TypeElement annotation : annotations) {
                 for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
-                    metadataList.add(this.elementReader.read(element));
+                    final Optional<ValueAnnotationMetadata> metadata = this.elementReader.read(element);
+                    if (!metadata.isPresent()) {
+                        continue;
+                    }
+                    metadataList.add(metadata.get());
                 }
             }
             this.writeToTargetFile(metadataList);
-        } catch (Exception e) {
-            // TODO: exceptions should be caught at annotation level to continue processing
-            e.printStackTrace();
+        } catch (final Exception e) {
             throw new ValueAnnotationException("Error while processing Value annotations", e);
         }
         return false;
     }
 
     private void writeToTargetFile(final List<ValueAnnotationMetadata> metadata) {
-        try (Writer writer = this.getFileWriter()) {
+        try (final Writer writer = this.getFileWriter()) {
             JsonWriter jsonWriter = new JsonWriter(writer);
             jsonWriter.write(metadata);
         } catch (IOException ioe) {
@@ -70,7 +75,7 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
     }
 
     private Writer getFileWriter() throws IOException {
-        return processingEnv.getFiler()
+        return this.processingEnv.getFiler()
                 .createResource(
                         StandardLocation.CLASS_OUTPUT,
                         TARGET_PACKAGE,

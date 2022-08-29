@@ -10,6 +10,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.Elements;
 import java.util.Map;
+import java.util.Optional;
 
 public class ElementReader {
 
@@ -23,7 +24,7 @@ public class ElementReader {
         this.elementUtils = elementUtils;
     }
 
-    public ValueAnnotationMetadata read(final Element element) {
+    public Optional<ValueAnnotationMetadata> read(final Element element) {
         try {
             return ValueAnnotationMetadataBuilder.of(this.extractValue(element))
                     .type(element.asType().toString())
