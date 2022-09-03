@@ -16,7 +16,7 @@ public class ElementReader {
 
     public static final String VALUE_ANNOTATION_CLASS = "org.springframework.beans.factory.annotation.Value";
 
-    private static final String VALUE_METHOD = "value";
+    private static final String VALUE_METHOD = "com/github/egoettelmann/annotationprocessor/spring/value";
 
     private final Elements elementUtils;
 

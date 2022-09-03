@@ -47,6 +47,7 @@ jobs:
             mvn versions:set -DremoveSnapshot=true -DgenerateBackupPoms=false
             PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
             sed -i "s,<version>$OLD_PROJECT_VERSION</version>,<version>$PROJECT_VERSION</version>,g" README.md
+            find ./ -iname "README.md" -exec sed -i "s,<version>$OLD_PROJECT_VERSION</version>,<version>$PROJECT_VERSION</version>,g" "{}" ";"
             git config user.name "<< pipeline.parameters.git-user >>"
             git config user.email "<< pipeline.parameters.git-email >>"
             git add .
@@ -127,7 +128,7 @@ jobs:
             git config user.name "<< pipeline.parameters.git-user >>"
             git config user.email "<< pipeline.parameters.git-email >>"
             git tag -a "v$PROJECT_VERSION" -m "Release $PROJECT_VERSION"
-            git push --follow-tags https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-value-annotation-processor.git HEAD:<< pipeline.parameters.branch-master >>
+            git push --follow-tags https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-configuration-extensions.git HEAD:<< pipeline.parameters.branch-master >>
             mvn nexus-staging:release --settings .maven.xml
       - persist_to_workspace:
           root: .
@@ -161,8 +162,8 @@ jobs:
             git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
             git fetch --all
             git merge origin/<< pipeline.parameters.branch-develop >>
-            git push --follow-tags https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-value-annotation-processor.git HEAD:<< pipeline.parameters.branch-develop >>
-            git push --delete https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-value-annotation-processor.git << pipeline.parameters.branch-release >>
+            git push --follow-tags https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-configuration-extensions.git HEAD:<< pipeline.parameters.branch-develop >>
+            git push --delete https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-configuration-extensions.git << pipeline.parameters.branch-release >>
       - persist_to_workspace:
           root: .
           paths:

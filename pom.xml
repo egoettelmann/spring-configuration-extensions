@@ -5,13 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.egoettelmann</groupId>
-    <artifactId>spring-value-annotation-processor</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
-    <name>Spring Value Annotation Processor</name>
-    <description>Annotation processor to extract all configuration properties injected through Spring @Value annotations</description>
+    <artifactId>spring-configuration-extensions</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.5-SNAPSHOT</version>
+    <name>Spring Configuration Extensions</name>
+    <description>Extensions for Spring Configurations management</description>
 
     <!-- Project URL -->
-    <url>https://github.com/egoettelmann/spring-value-annotation-processor</url>
+    <url>https://github.com/egoettelmann/spring-configuration-extensions</url>
 
     <!-- License -->
     <licenses>
@@ -24,8 +25,8 @@
 
     <!-- Git -->
     <scm>
-        <connection>scm:git:https://github.com/egoettelmann/spring-value-annotation-processor.git</connection>
-        <url>https://github.com/egoettelmann/spring-value-annotation-processor</url>
+        <connection>scm:git:https://github.com/egoettelmann/spring-configuration-extensions.git</connection>
+        <url>https://github.com/egoettelmann/spring-configuration-extensions</url>
     </scm>
 
     <!-- Repositories -->
@@ -49,36 +50,156 @@
         </developer>
     </developers>
 
+    <!-- Properties -->
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Dependencies versions -->
+        <maven.version>3.8.6</maven.version>
+        <maven-plugin.version>3.6.4</maven-plugin.version>
+        <maven-project.version>2.2.1</maven-project.version>
+        <jackson.version>2.13.3</jackson.version>
+        <snakeyaml.version>1.30</snakeyaml.version>
+        <semver4j.version>3.1.0</semver4j.version>
+        <freemarker.version>2.3.31</freemarker.version>
+        <openhtml.version>1.0.10</openhtml.version>
+
+        <!-- Compile dependencies versions -->
+        <lombok.version>1.18.24</lombok.version>
+
+        <!-- Test dependencies versions -->
+        <junit.version>5.7.1</junit.version>
+
+        <!-- Build flags -->
         <skip.sign>false</skip.sign>
     </properties>
 
-    <dependencies>
-        <!-- Tests -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.7.1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <!-- Modules -->
+    <modules>
+        <module>spring-value-annotation-processor</module>
+        <module>spring-configuration-aggregator-maven-plugin</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Maven dependencies -->
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${maven.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-model</artifactId>
+                <version>${maven.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-settings</artifactId>
+                <version>${maven.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-artifact</artifactId>
+                <version>${maven.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${maven.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>${maven-plugin.version}</version>
+                <type>maven-plugin</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.plugin-tools</groupId>
+                <artifactId>maven-plugin-annotations</artifactId>
+                <version>${maven-plugin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-project</artifactId>
+                <version>${maven-project.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- JSON -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- YAML -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
+
+            <!-- SemVer -->
+            <dependency>
+                <groupId>com.vdurmont</groupId>
+                <artifactId>semver4j</artifactId>
+                <version>${semver4j.version}</version>
+            </dependency>
+
+            <!-- Freemarker -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+
+            <!-- OpenHTMLtoPDF -->
+            <dependency>
+                <groupId>com.openhtmltopdf</groupId>
+                <artifactId>openhtmltopdf-core</artifactId>
+                <version>${openhtml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.openhtmltopdf</groupId>
+                <artifactId>openhtmltopdf-pdfbox</artifactId>
+                <version>${openhtml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.openhtmltopdf</groupId>
+                <artifactId>openhtmltopdf-svg-support</artifactId>
+                <version>${openhtml.version}</version>
+            </dependency>
+
+            <!-- Build dependencies -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Tests -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!-- Build -->
     <build>
         <plugins>
-            <!-- Disable annotation processing to prevent cyclic dependency on itself -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <proc>none</proc>
-                </configuration>
-            </plugin>
-
             <!-- Tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
