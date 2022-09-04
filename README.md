@@ -7,9 +7,9 @@ Spring Configuration Extensions
 This project is intended to provide some tools around Spring configurations.
 
 You will find following modules:
- - [spring-value-annotation-processor](./spring-value-annotation-processor/README.md):
+ - [spring-value-annotation-processor](./spring-value-annotation-processor):
    an annotation processor to extract metadata for configuration properties from `@Value` annotations.
- - [spring-configuration-aggregator-maven-plugin](./spring-configuration-aggregator-maven-plugin/README.md):
+ - [spring-configuration-aggregator-maven-plugin](./spring-configuration-aggregator-maven-plugin):
    a Maven plugin to aggregate all metadata files of a Spring project and generate reports out of it.
 
 Goal of this project
@@ -32,6 +32,6 @@ The project is structured in different modules.
 You will find the documentation for each module in the corresponding sub-folder.
 
 In addition to the main modules, you can find the following :
- - [spring-configuration-extensions-samples](./spring-configuration-extensions-samples/README.md):
+ - [spring-configuration-extensions-samples](./spring-configuration-extensions-samples):
    a module that provides some samples to illustrate the usage of the different tools
    and on which all integration tests are performed. 
