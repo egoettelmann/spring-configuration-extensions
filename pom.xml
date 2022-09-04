@@ -7,7 +7,7 @@
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-extensions</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
     <name>Spring Configuration Extensions</name>
     <description>Extensions for Spring Configurations management</description>
 
@@ -242,7 +242,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
+                <version>1.6.13</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -305,11 +305,20 @@
     </build>
 
     <profiles>
+        <!-- Profile to skip signing (for build only) -->
         <profile>
             <id>no-sign</id>
             <properties>
                 <skip.sign>true</skip.sign>
             </properties>
+        </profile>
+        <!-- Profile to release modules -->
+        <profile>
+            <id>release</id>
+            <modules>
+                <module>spring-value-annotation-processor</module>
+                <module>spring-configuration-aggregator-maven-plugin</module>
+            </modules>
         </profile>
     </profiles>
 
