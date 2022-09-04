@@ -76,8 +76,8 @@ jobs:
             - ~/.m2
           key: m2-{{ checksum "pom.xml" }}
       - run:
-          name: "Clean verify"
-          command: mvn clean verify
+          name: "Clean install"
+          command: mvn clean install
       - persist_to_workspace:
           root: .
           paths:
