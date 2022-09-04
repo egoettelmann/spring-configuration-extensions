@@ -7,7 +7,7 @@
     <parent>
         <artifactId>spring-configuration-extensions</artifactId>
         <groupId>com.github.egoettelmann</groupId>
-        <version>0.0.6-SNAPSHOT</version>
+        <version>0.0.6</version>
     </parent>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
