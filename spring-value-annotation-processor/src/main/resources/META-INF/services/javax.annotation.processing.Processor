@@ -1,1 +1,1 @@
-com.github.egoettelmann.annotationprocessor.spring.value.ValueAnnotationProcessor
+com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.ValueAnnotationProcessor

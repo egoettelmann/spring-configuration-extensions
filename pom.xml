@@ -65,6 +65,7 @@
         <semver4j.version>3.1.0</semver4j.version>
         <freemarker.version>2.3.31</freemarker.version>
         <openhtml.version>1.0.10</openhtml.version>
+        <apache-commons.version>3.11</apache-commons.version>
 
         <!-- Compile dependencies versions -->
         <lombok.version>1.18.24</lombok.version>
@@ -80,6 +81,7 @@
     <modules>
         <module>spring-value-annotation-processor</module>
         <module>spring-configuration-aggregator-maven-plugin</module>
+        <module>spring-configuration-extensions-samples</module>
     </modules>
 
     <dependencyManagement>
@@ -132,6 +134,13 @@
                 <artifactId>maven-project</artifactId>
                 <version>${maven-project.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!-- Apache commons -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache-commons.version}</version>
             </dependency>
 
             <!-- JSON -->
@@ -200,11 +209,26 @@
     <!-- Build -->
     <build>
         <plugins>
-            <!-- Tests -->
+            <!-- Unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
+            </plugin>
+
+            <!-- Integration tests-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Release to Maven Central (staging) -->

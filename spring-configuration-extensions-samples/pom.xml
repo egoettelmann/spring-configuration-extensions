@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>spring-configuration-extensions</artifactId>
+        <groupId>com.github.egoettelmann</groupId>
+        <version>0.0.5-SNAPSHOT</version>
+    </parent>
+    <artifactId>spring-configuration-extensions-samples</artifactId>
+    <name>Spring Configuration Extensions: Samples</name>
+    <description>Samples for illustrating Spring Configuration Extensions</description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.7.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Project dependencies -->
+        <dependency>
+            <groupId>com.github.egoettelmann</groupId>
+            <artifactId>spring-value-annotation-processor</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.egoettelmann</groupId>
+            <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
+            <version>${project.version}</version>
+            <type>maven-plugin</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Build dependencies -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Sample configuration -->
+            <plugin>
+                <groupId>com.github.egoettelmann</groupId>
+                <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <includeDependencies>
+                        <!-- Includes only metadata defined in dependencies with same 'groupId' as current project -->
+                        <dependencyMatcher>
+                            <groupId>${project.groupId}</groupId>
+                        </dependencyMatcher>
+                    </includeDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Skipping Javadoc-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- Skipping install -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- Skipping deploy -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

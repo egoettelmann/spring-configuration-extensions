@@ -10,7 +10,7 @@
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>spring-value-annotation-processor</artifactId>
-    <name>Spring Value Annotation Processor</name>
+    <name>Spring Configuration Extensions: Value Annotation Processor</name>
     <description>Annotation processor to extract all configuration properties injected through Spring @Value annotations</description>
 
     <dependencies>

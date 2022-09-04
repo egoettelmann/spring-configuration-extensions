@@ -1,0 +1,5 @@
+sample:
+  app:
+    title: "Sample Application"
+  custom:
+    conf: "Custom Config Value"

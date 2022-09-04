@@ -1,5 +1,5 @@
 <#ftl output_format="HTML">
-<#-- @ftlvariable name="metadata" type="com.github.egoettelmann.maven.configuration.spring.core.model.ArtifactMetadata" -->
+<#-- @ftlvariable name="metadata" type="com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.ArtifactMetadata" -->
 <#-- @ftlvariable name="project" type="org.apache.maven.project.MavenProject" -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
