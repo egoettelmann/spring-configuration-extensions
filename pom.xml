@@ -312,14 +312,6 @@
                 <skip.sign>true</skip.sign>
             </properties>
         </profile>
-        <!-- Profile to release modules -->
-        <profile>
-            <id>release</id>
-            <modules>
-                <module>spring-value-annotation-processor</module>
-                <module>spring-configuration-aggregator-maven-plugin</module>
-            </modules>
-        </profile>
     </profiles>
 
 </project>

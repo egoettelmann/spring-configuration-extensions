@@ -129,7 +129,7 @@ jobs:
             git config user.email "<< pipeline.parameters.git-email >>"
             git tag -a "v$PROJECT_VERSION" -m "Release $PROJECT_VERSION"
             git push --follow-tags https://${GITHUB_TOKEN}@github.com/egoettelmann/spring-configuration-extensions.git HEAD:<< pipeline.parameters.branch-master >>
-            mvn nexus-staging:release -Prelease --settings .maven.xml
+            mvn nexus-staging:release --settings .maven.xml
       - persist_to_workspace:
           root: .
           paths:

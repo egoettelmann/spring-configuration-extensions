@@ -90,35 +90,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- Skipping Javadoc-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <!-- Skipping install -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>3.0.1</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <!-- Skipping deploy -->
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
