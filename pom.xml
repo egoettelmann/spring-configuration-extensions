@@ -306,7 +306,7 @@
 
     <profiles>
         <profile>
-            <id>local</id>
+            <id>no-sign</id>
             <properties>
                 <skip.sign>true</skip.sign>
             </properties>
