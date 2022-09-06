@@ -1,0 +1,23 @@
+{
+  "properties" : [ {
+    "name" : "sample.app.title",
+    "type" : "java.lang.String",
+    "description" : null,
+    "defaultValue" : "Sample Application",
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleProperties"
+    } ]
+  }, {
+    "name" : "sample.custom.conf",
+    "type" : "java.lang.String",
+    "description" : null,
+    "defaultValue" : "Custom Config Value",
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig"
+    } ]
+  } ]
+}

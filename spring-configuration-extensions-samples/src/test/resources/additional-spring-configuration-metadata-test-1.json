@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "sample.custom.conf",
+      "type": "java.lang.String",
+      "description": null,
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig",
+      "defaultValue": null
+    }
+  ]
+}

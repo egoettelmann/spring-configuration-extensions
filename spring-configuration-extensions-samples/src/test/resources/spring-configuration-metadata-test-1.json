@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "sample.app",
+      "type": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleProperties",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sample.app.title",
+      "type": "java.lang.String",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleProperties"
+    }
+  ],
+  "hints": []
+}

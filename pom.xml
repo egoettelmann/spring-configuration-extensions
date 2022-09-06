@@ -72,6 +72,7 @@
 
         <!-- Test dependencies versions -->
         <junit.version>5.7.1</junit.version>
+        <json-patch.version>1.13</json-patch.version>
 
         <!-- Build flags -->
         <skip.sign>false</skip.sign>
@@ -201,6 +202,12 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.java-json-tools</groupId>
+                <artifactId>json-patch</artifactId>
+                <version>${json-patch.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
