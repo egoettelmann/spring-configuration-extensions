@@ -46,7 +46,6 @@ jobs:
             OLD_PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
             mvn versions:set -DremoveSnapshot=true -DgenerateBackupPoms=false
             PROJECT_VERSION=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
-            sed -i "s,<version>$OLD_PROJECT_VERSION</version>,<version>$PROJECT_VERSION</version>,g" README.md
             find ./ -iname "README.md" -exec sed -i "s,<version>$OLD_PROJECT_VERSION</version>,<version>$PROJECT_VERSION</version>,g" "{}" ";"
             git config user.name "<< pipeline.parameters.git-user >>"
             git config user.email "<< pipeline.parameters.git-email >>"

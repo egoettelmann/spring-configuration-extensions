@@ -1,7 +1,8 @@
-Spring Value Annotation Processor
+Spring Configuration Extensions: Value Annotation Processor
 ==========
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.egoettelmann/spring-value-annotation-processor?style=flat-square&label=Maven%20Central)](https://search.maven.org/artifact/com.github.egoettelmann/spring-value-annotation-processor)
+[![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-configuration-extensions/develop?label=Develop&style=flat-square)](https://app.circleci.com/pipelines/github/egoettelmann/spring-configuration-extensions?branch=develop)
 
 An annotation processor to extract all configuration properties injected through Spring `@Value` annotations.
 
@@ -15,7 +16,7 @@ If using Maven, you can simply add the project as a `provided` dependency.
 <dependency>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-value-annotation-processor</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.8-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -33,7 +34,7 @@ The plugin's configuration should look to something like the following:
             <annotationProcessorPath>
                 <groupId>com.github.egoettelmann</groupId>
                 <artifactId>spring-value-annotation-processor</artifactId>
-                <version>0.0.4-SNAPSHOT</version>
+                <version>0.0.8-SNAPSHOT</version>
             </annotationProcessorPath>
         </annotationProcessorPaths>
     </configuration>
@@ -60,7 +61,7 @@ Configuration would be as follows:
             <annotationProcessorPath>
                 <groupId>com.github.egoettelmann</groupId>
                 <artifactId>spring-value-annotation-processor</artifactId>
-                <version>0.0.4-SNAPSHOT</version>
+                <version>0.0.8-SNAPSHOT</version>
             </annotationProcessorPath>
         </annotationProcessorPaths>
         <compilerArgs>
