@@ -104,5 +104,48 @@
     </#if>
     </tbody>
 </table>
+
+<#if metadata.changes??>
+    <table class="overviewChanges" border="0" cellpadding="3" cellspacing="0"
+           summary="Configuration properties table, listing metadata">
+    <caption><span>Configuration properties changes from version <span>${(metadata.changes.baseVersion)!}</span></span><span class="tabEnd">&nbsp;</span></caption>
+    <tr>
+        <th class="colFirst" scope="col">Name</th>
+        <th class="colLast" scope="col">Change type</th>
+    </tr>
+    <tbody>
+        <#list metadata.changes.added as property>
+            <tr class="${property?is_even_item?then('altColor','rowColor')}">
+                <td class="colFirst">
+                    <small>
+                        <code>${property}</code>
+                    </small>
+                </td>
+                <td class="colLast">ADDED</td>
+            </tr>
+        </#list>
+        <#list metadata.changes.updated as property>
+            <tr class="${property?is_even_item?then('altColor','rowColor')}">
+                <td class="colFirst">
+                    <small>
+                        <code>${property}</code>
+                    </small>
+                </td>
+                <td class="colLast">UPDATED</td>
+            </tr>
+        </#list>
+        <#list metadata.changes.deleted as property>
+            <tr class="${property?is_even_item?then('altColor','rowColor')}">
+                <td class="colFirst">
+                    <small>
+                        <code>${property}</code>
+                    </small>
+                </td>
+                <td class="colLast">DELETED</td>
+            </tr>
+        </#list>
+    </tbody>
+    </table>
+</#if>
 </body>
 </html>

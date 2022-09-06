@@ -59,10 +59,13 @@ public class DefaultReportingService implements ReportingService {
             try {
                 final Artifact previousArtifact = this.repositoryService.resolvePreviousStableVersion(this.project);
                 if (previousArtifact != null) {
+                    this.log.info("Comparing with previous stable version: " + previousArtifact.getVersion());
                     final MetadataComparator comparator = new MetadataComparator(this.log, aggregate);
                     final List<AggregatedPropertyMetadata> previous = this.aggregationService.load(previousArtifact);
                     final ArtifactMetadata.Changes changes = comparator.compare(previous, previousArtifact.getVersion());
                     metadata.setChanges(changes);
+                } else {
+                    this.log.info("No previous stable version found to compare");
                 }
             } catch (final MetadataFileNotFoundException e) {
                 this.log.warn("No aggregation file found for previous version, skipping comparison");

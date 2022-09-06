@@ -2,6 +2,7 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.ArtifactMetadata;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import java.util.ArrayList;
@@ -72,10 +73,10 @@ public class MetadataComparator {
     }
 
     private boolean hasChanged(final AggregatedPropertyMetadata current, final AggregatedPropertyMetadata previous) {
-        if (!current.getType().equalsIgnoreCase(previous.getType())) {
+        if (!StringUtils.equalsIgnoreCase(current.getType(), previous.getType())) {
             return true;
         }
-        if (!current.getDefaultValue().equalsIgnoreCase(previous.getDefaultValue())) {
+        if (!StringUtils.equalsIgnoreCase(current.getDefaultValue(), previous.getDefaultValue())) {
             return true;
         }
         return false;
