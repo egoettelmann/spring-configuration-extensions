@@ -27,7 +27,7 @@ public class AggregatedConfigurationPropertiesIT {
 
             final JsonNode jsonPatch = JsonDiff.asJson(expectedProperties, generatedProperties);
             Assertions.assertTrue(jsonPatch.isArray(), "Patch should be an array");
-            Assertions.assertEquals(0, jsonPatch.size(), "Path should be empty");
+            Assertions.assertEquals(0, jsonPatch.size(), "Patch should be empty");
         }
     }
 
