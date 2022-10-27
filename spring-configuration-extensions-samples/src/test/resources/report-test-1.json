@@ -4,7 +4,7 @@
     "artifactId" : "spring-configuration-extensions-samples",
     "version" : "0.0.7-SNAPSHOT",
     "name" : "Spring Configuration Extensions: Samples",
-    "description" : "Samples for illustrating Spring Configuration Extensions",
+    "description" : "Samples for illustrating Spring Configuration Extensions and performing tests",
     "properties" : [ {
       "name" : "sample.app.title",
       "type" : "java.lang.String",
