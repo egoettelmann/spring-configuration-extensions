@@ -1,6 +1,5 @@
 <#ftl output_format="HTML">
 <#-- @ftlvariable name="metadata" type="com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.ArtifactMetadata" -->
-<#-- @ftlvariable name="project" type="org.apache.maven.project.MavenProject" -->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
@@ -39,6 +38,7 @@
             letter-spacing: .01em;
             padding-bottom: 0.075rem;
             text-align: left;
+            margin-top: 1rem;
         }
 
         table th {
@@ -50,6 +50,14 @@
             font-size: 15px;
         }
 
+        table tr.altColor {
+            background-color:#FFFFFF;
+        }
+
+        table tr.rowColor {
+            background-color:#EEEEEF;
+        }
+
         .h1 {
             color: #141818;
             font-weight: 600;
@@ -59,17 +67,26 @@
             padding-top: 1.8rem;
             font-size: 2.3em;
         }
+
+        p {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-<div class="h1">${(project.description)!"Project overview"}.</div>
+<div class="h1">${(metadata.name)!metadata.artifactId}.</div>
+<#if metadata.description??>
+    <div>
+        <p>${metadata.description}</p>
+    </div>
+</#if>
 
 <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0"
        summary="Configuration properties table, listing metadata">
     <caption><span>Configuration properties</span><span class="tabEnd">&nbsp;</span></caption>
     <tr>
         <th class="colFirst" scope="col">Name</th>
-        <th class="colFirst" scope="col">Type and Description</th>
+        <th class="colFirst" scope="col">Type</th>
         <th class="colLast" scope="col">Default Value</th>
     </tr>
     <tbody>
@@ -89,8 +106,6 @@
                     <small>
                         <code>${(property.type)!}</code>
                     </small>
-                    <br/>
-                    <span>${(property.description)!}</span>
                 </td>
                 <td class="colLast">
                     <#if property.defaultValue?has_content>
@@ -98,6 +113,11 @@
                             <code>${(property.defaultValue?j_string)!}</code>
                         </small>
                     </#if>
+                </td>
+            </tr>
+            <tr class="${property?is_even_item?then('altColor','rowColor')}">
+                <td colspan="3" class="colFirst">
+                    <p>${(property.description)!}</p>
                 </td>
             </tr>
         </#list>

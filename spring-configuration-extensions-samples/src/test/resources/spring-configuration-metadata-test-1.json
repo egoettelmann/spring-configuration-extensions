@@ -10,6 +10,7 @@
     {
       "name": "sample.app.title",
       "type": "java.lang.String",
+      "description": "Sample app title injected through @ConfigurationProperties",
       "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleProperties"
     }
   ],

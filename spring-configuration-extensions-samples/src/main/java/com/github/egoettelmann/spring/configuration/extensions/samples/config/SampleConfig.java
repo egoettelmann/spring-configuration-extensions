@@ -10,9 +10,15 @@ public class SampleConfig {
     @Autowired
     private SampleProperties sampleProperties;
 
+    /**
+     * Custom config value injected by @Value.
+     */
     @Value("${sample.custom.conf}")
     private String customConfig;
 
+    /**
+     * Config including unicode characters.
+     */
     @Value("${sample.unicode.chars}")
     private String unicodeChars;
 

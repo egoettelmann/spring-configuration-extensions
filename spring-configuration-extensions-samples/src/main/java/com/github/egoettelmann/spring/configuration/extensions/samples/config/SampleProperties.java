@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 @Data
 public class SampleProperties {
 
+   /**
+    * Sample app title injected through @ConfigurationProperties
+    */
    private String title;
 
 }

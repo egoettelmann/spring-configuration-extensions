@@ -11,7 +11,7 @@
     </parent>
     <artifactId>spring-configuration-extensions-samples</artifactId>
     <name>Spring Configuration Extensions: Samples</name>
-    <description>Samples for illustrating Spring Configuration Extensions</description>
+    <description>Samples for illustrating Spring Configuration Extensions and performing tests</description>
 
     <dependencyManagement>
         <dependencies>
