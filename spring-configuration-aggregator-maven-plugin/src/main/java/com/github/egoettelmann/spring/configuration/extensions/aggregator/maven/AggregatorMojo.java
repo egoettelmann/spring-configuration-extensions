@@ -4,7 +4,7 @@ import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.components.repository.DefaultRepositoryService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
-import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFiles;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -25,7 +25,7 @@ public class AggregatorMojo extends AbstractPluginMojo {
      * The list of properties files from which to retrieve defaultValues from.
      */
     @Parameter()
-    private PropertiesFiles propertiesFiles;
+    private List<PropertiesFile> propertiesFiles;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -66,17 +66,16 @@ public class AggregatorMojo extends AbstractPluginMojo {
         }
     }
 
-    private PropertiesFiles getPropertiesFiles() {
+    private List<PropertiesFile> getPropertiesFiles() {
         if (this.propertiesFiles != null) {
             return this.propertiesFiles;
         }
 
         // Defining default files
-        final PropertiesFiles files = new PropertiesFiles();
-        files.setPropertiesFile(new ArrayList<>());
+        final List<PropertiesFile> files = new ArrayList<>();
         final String resourcesFolder = this.project.getBasedir() + "/src/main/resources";
-        files.getPropertiesFile().add(resourcesFolder + "/application.yml");
-        files.getPropertiesFile().add(resourcesFolder + "/application.properties");
+        files.add(new PropertiesFile(resourcesFolder + "/application.yml"));
+        files.add(new PropertiesFile(resourcesFolder + "/application.properties"));
         return files;
     }
 

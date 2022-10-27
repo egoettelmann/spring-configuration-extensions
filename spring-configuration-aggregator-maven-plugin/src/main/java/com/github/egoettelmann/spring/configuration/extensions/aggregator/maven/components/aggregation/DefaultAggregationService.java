@@ -3,7 +3,7 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
-import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFiles;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.MetadataFileNotFoundException;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.OperationFailedException;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
@@ -58,7 +58,7 @@ public class DefaultAggregationService implements AggregationService {
     }
 
     @Override
-    public List<AggregatedPropertyMetadata> aggregate(final PropertiesFiles propertiesFiles) {
+    public List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles) {
         final AggregationBuilder builder = new AggregationBuilder(this.log);
 
         // Resolving from current project
@@ -78,12 +78,12 @@ public class DefaultAggregationService implements AggregationService {
 
         // Adding default values
         if (propertiesFiles != null) {
-            for (final String filePath : propertiesFiles.getPropertiesFile()) {
+            for (final PropertiesFile propertiesFile : propertiesFiles) {
                 try {
-                    final Properties properties = this.propertiesValueReader.read("file:///" + filePath);
+                    final Properties properties = this.propertiesValueReader.read("file:///" + propertiesFile.getPath());
                     builder.put(properties);
                 } catch (final MetadataFileNotFoundException e) {
-                    this.log.warn("No properties found in " + filePath);
+                    this.log.warn("No properties found in " + propertiesFile.getPath());
                     this.log.debug(e);
                 }
             }

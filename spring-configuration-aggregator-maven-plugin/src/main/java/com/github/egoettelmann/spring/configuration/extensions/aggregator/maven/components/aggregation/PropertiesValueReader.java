@@ -40,7 +40,7 @@ class PropertiesValueReader {
 
     private Properties readAsProperties(final URL propertiesUrl) throws MetadataFileNotFoundException {
         try (final InputStream fileContent = propertiesUrl.openStream()) {
-            this.log.debug("Found property values file " + propertiesUrl.getFile() + " in " + propertiesUrl.getPath() + "");
+            this.log.debug("Found property values file " + propertiesUrl.getFile());
 
             // Parsing content
             final Properties properties = new Properties();
@@ -56,7 +56,7 @@ class PropertiesValueReader {
 
     private Properties readAsYaml(final URL propertiesUrl) throws MetadataFileNotFoundException {
         try (final InputStream fileContent = propertiesUrl.openStream()) {
-            this.log.debug("Found property values file " + propertiesUrl.getFile() + " in " + propertiesUrl.getPath() + "");
+            this.log.debug("Found property values file " + propertiesUrl.getFile());
 
             // Parsing content
             final Properties properties = new Properties();
