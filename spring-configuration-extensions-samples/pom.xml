@@ -7,7 +7,7 @@
     <parent>
         <artifactId>spring-configuration-extensions</artifactId>
         <groupId>com.github.egoettelmann</groupId>
-        <version>0.1.1</version>
+        <version>0.1.2-SNAPSHOT</version>
     </parent>
     <artifactId>spring-configuration-extensions-samples</artifactId>
     <name>Spring Configuration Extensions: Samples</name>
