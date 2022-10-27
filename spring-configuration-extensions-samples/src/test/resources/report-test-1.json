@@ -25,6 +25,16 @@
         "artifactId" : "spring-configuration-extensions-samples",
         "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig"
       } ]
+    }, {
+      "name" : "sample.unicode.chars",
+      "type" : "java.lang.String",
+      "description" : null,
+      "defaultValue" : "\u0000\u0001\u0002\u0003\u0004\u0005",
+      "sourceTypes" : [ {
+        "groupId" : "com.github.egoettelmann",
+        "artifactId" : "spring-configuration-extensions-samples",
+        "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig"
+      } ]
     } ],
     "changes" : null
   } ]

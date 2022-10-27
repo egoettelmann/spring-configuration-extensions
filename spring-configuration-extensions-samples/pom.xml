@@ -86,6 +86,21 @@
                             <groupId>${project.groupId}</groupId>
                         </dependencyMatcher>
                     </includeDependencies>
+                    <propertiesFiles>
+                        <propertiesFile>${project.basedir}/src/main/resources/application.yml</propertiesFile>
+                        <propertiesFile>${project.basedir}/src/main/resources/application-sample.properties</propertiesFile>
+                    </propertiesFiles>
+                    <outputReports>
+                        <outputReport>
+                            <type>json</type>
+                        </outputReport>
+                        <outputReport>
+                            <type>html</type>
+                        </outputReport>
+                        <outputReport>
+                            <type>pdf</type>
+                        </outputReport>
+                    </outputReports>
                 </configuration>
                 <executions>
                     <execution>

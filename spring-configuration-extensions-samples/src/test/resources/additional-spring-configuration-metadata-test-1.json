@@ -6,6 +6,13 @@
       "description": null,
       "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig",
       "defaultValue": null
+    },
+    {
+      "name": "sample.unicode.chars",
+      "type": "java.lang.String",
+      "description": null,
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig",
+      "defaultValue": null
     }
   ]
 }

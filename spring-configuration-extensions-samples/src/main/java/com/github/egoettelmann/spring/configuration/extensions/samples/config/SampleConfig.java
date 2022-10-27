@@ -13,4 +13,7 @@ public class SampleConfig {
     @Value("${sample.custom.conf}")
     private String customConfig;
 
+    @Value("${sample.unicode.chars}")
+    private String unicodeChars;
+
 }

@@ -95,7 +95,7 @@
                 <td class="colLast">
                     <#if property.defaultValue?has_content>
                         <small>
-                            <code>${(property.defaultValue)!}</code>
+                            <code>${(property.defaultValue?j_string)!}</code>
                         </small>
                     </#if>
                 </td>
