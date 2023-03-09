@@ -93,7 +93,7 @@ public class DefaultReportingService implements ReportingService {
                 return;
             }
         } catch (final Exception e) {
-            throw new OperationFailedException("Failed to write report " + outputReport.getType());
+            throw new OperationFailedException("Failed to write report " + outputReport.getType(), e);
         }
 
         // No appropriate writer found for report
