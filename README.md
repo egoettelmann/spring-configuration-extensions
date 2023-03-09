@@ -1,8 +1,8 @@
 Spring Configuration Extensions
 ==========
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.egoettelmann/spring-configuration-extensions?style=flat-square&label=Maven%20Central)](https://search.maven.org/artifact/com.github.egoettelmann/spring-configuration-extensions)
-[![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-configuration-extensions/develop?label=Develop&style=flat-square)](https://app.circleci.com/pipelines/github/egoettelmann/spring-configuration-extensions?branch=develop)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.egoettelmann/spring-configuration-extensions?color=blue&label=Maven%20Central&logo=Apache%20Maven&logoColor=orange&style=flat-square)](https://search.maven.org/artifact/com.github.egoettelmann/spring-configuration-extensions)
+[![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-configuration-extensions/develop?label=develop&logo=circleci&style=flat-square)](https://app.circleci.com/pipelines/github/egoettelmann/spring-configuration-extensions?branch=develop)
 
 This project is intended to provide some tools around Spring configurations.
 

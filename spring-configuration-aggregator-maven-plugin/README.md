@@ -1,8 +1,8 @@
 Spring Configuration Extensions: Aggregator Maven Plugin
 ==========
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.egoettelmann/spring-configuration-aggregator-maven-plugin?style=flat-square&label=Maven%20Central)](https://search.maven.org/artifact/com.github.egoettelmann/spring-configuration-aggregator-maven-plugin)
-[![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-configuration-extensions/develop?label=Develop&style=flat-square)](https://app.circleci.com/pipelines/github/egoettelmann/spring-configuration-extensions?branch=develop)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.egoettelmann/spring-configuration-aggregator-maven-plugin?style=flat-square&color=blue&label=Maven%20Central&logo=Apache%20Maven&logoColor=orange)](https://search.maven.org/artifact/com.github.egoettelmann/spring-configuration-aggregator-maven-plugin)
+[![CircleCI build (develop)](https://img.shields.io/circleci/build/github/egoettelmann/spring-configuration-extensions/develop?label=develop&logo=circleci&style=flat-square)](https://app.circleci.com/pipelines/github/egoettelmann/spring-configuration-extensions?branch=develop)
 
 Maven plugin that aggregates all Spring configuration metadata
 files of the project dependencies into a single one.
@@ -43,7 +43,7 @@ You can simply add the project to the build plugin section.
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
     <executions>
         <execution>
             <goals>
@@ -137,7 +137,7 @@ Simple aggregation, with following additional options:
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
     <configuration>
         <!-- Ignores errors -->
         <failOnError>false</failOnError>
@@ -172,7 +172,7 @@ Simple aggregation, by only including properties from:
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
     <configuration>
         <includeDependencies>
             <!-- Includes only metadata defined in dependencies with same 'groupId' as current project -->
@@ -199,7 +199,7 @@ Aggregation and reporting of all configuration properties.
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
     <configuration>
         <outputReports>
             <!-- Generating default JSON report -->
@@ -238,7 +238,7 @@ Simple aggregation, that declares custom configuration files to load default val
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.2</version>
     <configuration>
         <!-- Loading default values from custom configuration file -->        
         <propertiesFiles>
