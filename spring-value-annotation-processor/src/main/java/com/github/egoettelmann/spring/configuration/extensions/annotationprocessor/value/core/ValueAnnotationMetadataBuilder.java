@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class ValueAnnotationMetadataBuilder {
 
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]*)}");
+    private static final Pattern PATTERN = Pattern.compile("\\$\\{(.*)}");
 
     private static final String DEFAULT_VALUE_SEPARATOR = ":";
 
