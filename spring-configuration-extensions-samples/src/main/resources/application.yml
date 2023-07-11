@@ -3,3 +3,25 @@ sample:
     title: "Sample Application"
   custom:
     conf: "Custom Config Value"
+
+---
+spring:
+    config.activate.on-profile: dev,default
+sample:
+    custom:
+        conf: "Custom Config Value On Dev"
+
+---
+spring:
+    config.activate.on-profile: test
+sample:
+    custom:
+        conf: "Custom Config Value On Test"
+
+---
+spring:
+    config.activate.on-profile: online
+sample:
+    custom:
+        conf: "Custom Config Value On Online"
+

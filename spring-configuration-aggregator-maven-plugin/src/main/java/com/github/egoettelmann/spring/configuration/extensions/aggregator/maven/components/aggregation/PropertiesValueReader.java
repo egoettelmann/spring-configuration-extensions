@@ -1,6 +1,7 @@
 package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.components.aggregation;
 
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.MetadataFileNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.yaml.snakeyaml.Yaml;
 
@@ -61,8 +62,14 @@ class PropertiesValueReader {
             // Parsing content
             final Properties properties = new Properties();
             final Yaml yaml = new Yaml();
-            final Map<String, String> flattened = this.flatten(yaml.load(fileContent));
-            properties.putAll(flattened);
+            Iterable<Object> objects = yaml.loadAll(fileContent);
+            objects.forEach(i -> {
+                final Map<String, String> flattened = this.flatten((Map<String, Object>) i);
+                String profiles = flattened.getOrDefault("spring.profiles", flattened.get("spring.config.activate.on-profile"));
+                if (StringUtils.isBlank(profiles) || profiles.contains("default")) {
+                    properties.putAll(flattened);
+                }
+            });
             this.log.debug("Found " + properties.size() + " property values in file " + propertiesUrl);
             for (final Map.Entry<Object, Object> entry : properties.entrySet()) {
                 this.log.debug("Found '" + entry.getKey() + "=" + entry.getValue() + "'");
