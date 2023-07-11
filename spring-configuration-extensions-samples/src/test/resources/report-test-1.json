@@ -19,7 +19,7 @@
       "name" : "sample.custom.conf",
       "type" : "java.lang.String",
       "description": "Custom config value injected by @Value.\n",
-      "defaultValue" : "Custom Config Value",
+      "defaultValue" : "Custom Config Value , [dev,default]: Custom Config Value On Dev , [test]: Custom Config Value On Test , [online]: Custom Config Value On Online",
       "sourceTypes" : [ {
         "groupId" : "com.github.egoettelmann",
         "artifactId" : "spring-configuration-extensions-samples",
