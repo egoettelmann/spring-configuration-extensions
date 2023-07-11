@@ -62,13 +62,13 @@ class PropertiesValueReader {
             // Parsing content
             final Properties properties = new Properties();
             final Yaml yaml = new Yaml();
-            Iterable<Object> objects = yaml.loadAll(fileContent);
-            objects.forEach(i -> {
+            yaml.loadAll(fileContent).forEach(i -> {
                 final Map<String, String> flattened = this.flatten((Map<String, Object>) i);
                 String profiles = flattened.getOrDefault("spring.profiles", flattened.get("spring.config.activate.on-profile"));
-                if (StringUtils.isBlank(profiles) || profiles.contains("default")) {
-                    properties.putAll(flattened);
-                }
+                flattened.forEach((key, value) -> {
+                    if ("spring.profiles".equals(key) || "spring.config.activate.on-profile".equals(key)) return;
+                    properties.put(key, mergeMultiProfileValue(properties.getProperty(key), profiles, value));
+                });
             });
             this.log.debug("Found " + properties.size() + " property values in file " + propertiesUrl);
             for (final Map.Entry<Object, Object> entry : properties.entrySet()) {
@@ -116,6 +116,22 @@ class PropertiesValueReader {
             }
         }
         return flatMap;
+    }
+
+    /**
+     * Merge multi-profile default value
+     * @param existsValue Value that already exists
+     * @param profiles Current profile
+     * @param value Current value
+     * @return Combined Value
+     */
+    private String mergeMultiProfileValue(String existsValue, String profiles, String value) {
+        final String newValue = StringUtils.isBlank(profiles) ? value : String.format("[%s]: %s", profiles, value);
+        if (StringUtils.isBlank(existsValue)) {
+            return newValue;
+        } else {
+            return String.format("%s , [%s]: %s", existsValue, profiles, value);
+        }
     }
 
 }
