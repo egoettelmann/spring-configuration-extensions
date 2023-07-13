@@ -1,14 +1,10 @@
 package com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.core;
 
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ValueAnnotationMetadataBuilder {
-
-    private static final Pattern PATTERN = Pattern.compile("\\$\\{([^}]*)}");
-
-    private static final String DEFAULT_VALUE_SEPARATOR = ":";
 
     private final String rawValue;
     private String type;
@@ -38,43 +34,23 @@ public class ValueAnnotationMetadataBuilder {
         return this;
     }
 
-    public Optional<ValueAnnotationMetadata> build() {
-        ValueAnnotationMetadata metadata = new ValueAnnotationMetadata();
+    public List<ValueAnnotationMetadata> build() {
+        final List<ValueAnnotationMetadata> results = new ArrayList<>();
 
-        // Adding metadata
-        metadata.setType(this.type);
-        metadata.setDescription(this.description);
-        metadata.setSourceType(this.sourceType);
+        final ValueAnnotationParser parser = new ValueAnnotationParser();
+        final Map<String, String> properties = parser.parse(this.rawValue);
 
-        // Extracting property name
-        final Optional<String> definition = extractPropertyDefinition(this.rawValue);
-        if (!definition.isPresent()) {
-            return Optional.empty();
-        }
-        final String definitionValue = definition.get();
-        final String[] values = definitionValue.split(DEFAULT_VALUE_SEPARATOR, 2);
-        metadata.setName(values[0].trim());
-
-        // Extracting default value of defined
-        if (values.length > 1) {
-            metadata.setDefaultValue(values[1].trim());
+        for (final Map.Entry<String, String> entry : properties.entrySet()) {
+            final ValueAnnotationMetadata metadata = new ValueAnnotationMetadata();
+            metadata.setType(this.type);
+            metadata.setDescription(this.description);
+            metadata.setSourceType(this.sourceType);
+            metadata.setName(entry.getKey());
+            metadata.setDefaultValue(entry.getValue());
+            results.add(metadata);
         }
 
-        return Optional.of(metadata);
-    }
-
-    private static Optional<String> extractPropertyDefinition(final String rawValue) {
-        final Matcher matcher = PATTERN.matcher(rawValue);
-        if (!matcher.find()) {
-            return Optional.empty();
-        }
-
-        final String match = matcher.group(1);
-        if (match == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(match.trim());
+        return results;
     }
 
 }

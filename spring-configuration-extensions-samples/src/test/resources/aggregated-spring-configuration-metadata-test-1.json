@@ -2,7 +2,7 @@
   "properties" : [ {
     "name" : "sample.app.title",
     "type" : "java.lang.String",
-    "description": "Sample app title injected through @ConfigurationProperties",
+    "description" : "Sample app title injected through @ConfigurationProperties",
     "defaultValue" : "Sample Application",
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",
@@ -12,17 +12,31 @@
   }, {
     "name" : "sample.custom.conf",
     "type" : "java.lang.String",
-    "description": "Custom config value injected by @Value.\n",
+    "description" : "Custom config value injected by @Value.\n\nCustom config value injected by @Value, with default value referencing another config.",
     "defaultValue" : "Custom Config Value",
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",
       "artifactId" : "spring-configuration-extensions-samples",
       "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig"
+    },  {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig2"
+    } ]
+  }, {
+    "name" : "sample.custom.conf2",
+    "type" : "java.lang.String",
+    "description" : "Custom config value injected by @Value, with default value referencing another config.\n",
+    "defaultValue" : "${sample.custom.conf}",
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig2"
     } ]
   }, {
     "name" : "sample.unicode.chars",
     "type" : "java.lang.String",
-    "description": "Config including unicode characters.\n",
+    "description" : "Config including unicode characters.\n",
     "defaultValue" : "\u0000\u0001\u0002\u0003\u0004\u0005",
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",

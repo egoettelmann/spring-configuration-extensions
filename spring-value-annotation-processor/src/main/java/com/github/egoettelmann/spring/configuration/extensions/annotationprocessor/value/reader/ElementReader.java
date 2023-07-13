@@ -2,6 +2,7 @@ package com.github.egoettelmann.spring.configuration.extensions.annotationproces
 
 import com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.core.ValueAnnotationMetadata;
 import com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.core.ValueAnnotationMetadataBuilder;
+import com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.core.ValueAnnotationParser;
 import com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.exceptions.ValueAnnotationException;
 
 import javax.lang.model.element.AnnotationMirror;
@@ -9,6 +10,7 @@ import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.Elements;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ public class ElementReader {
         this.elementUtils = elementUtils;
     }
 
-    public Optional<ValueAnnotationMetadata> read(final Element element) {
+    public List<ValueAnnotationMetadata> read(final Element element) {
         try {
             return ValueAnnotationMetadataBuilder.of(this.extractValue(element))
                     .type(element.asType().toString())

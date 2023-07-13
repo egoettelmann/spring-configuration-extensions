@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
@@ -45,12 +44,11 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
         for (final TypeElement annotation : annotations) {
             for (final Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
                 try {
-                    final Optional<ValueAnnotationMetadata> metadata = this.elementReader.read(element);
-                    if (!metadata.isPresent()) {
-                        continue;
+                    final List<ValueAnnotationMetadata> results = this.elementReader.read(element);
+                    for (final ValueAnnotationMetadata metadata : results) {
+                        this.processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Found @Value annotation with property '" + metadata.getName() + "'");
+                        metadataList.add(metadata);
                     }
-                    this.processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "Found @Value annotation with property '" + metadata.get().getName() + "'");
-                    metadataList.add(metadata.get());
                 } catch (final Exception e) {
                     final String errorMessage = "Error while processing @Value annotations on " + element.getSimpleName();
                     if (this.failOnError) {
