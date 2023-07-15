@@ -118,6 +118,15 @@
             <tr class="${property?is_even_item?then('altColor','rowColor')}">
                 <td colspan="3" class="colFirst">
                     <p>${(property.description)!}</p>
+                    <#if property.profiles?has_content>
+                        <small>Spring profiles:</small>
+                        <#list property.profiles as profile, value>
+                            <br/>
+                            <small><code>${profile}</code></small>
+                            <small>:</small>
+                            <small><code>${(value?j_string)!}</code></small>
+                        </#list>
+                    </#if>
                 </td>
             </tr>
         </#list>

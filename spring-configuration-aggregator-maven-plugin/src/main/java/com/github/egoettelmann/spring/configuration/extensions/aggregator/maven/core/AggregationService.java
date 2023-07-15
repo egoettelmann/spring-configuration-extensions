@@ -6,6 +6,7 @@ import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.
 import org.eclipse.aether.artifact.Artifact;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AggregationService {
 
@@ -14,9 +15,10 @@ public interface AggregationService {
      * Combines all metadata files from the project and of its dependencies.
      *
      * @param propertiesFiles the list of properties files to extract default values from
+     * @param profiles the list of spring profiles to extract default values from (can be null to accept all)
      * @return the list of aggregated properties metadata
      */
-    List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles);
+    List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles, final Set<String> profiles);
 
     /**
      * Loads the aggregated configuration properties metadata of the current project.

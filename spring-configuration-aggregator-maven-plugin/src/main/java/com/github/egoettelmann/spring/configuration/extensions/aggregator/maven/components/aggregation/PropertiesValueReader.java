@@ -1,6 +1,7 @@
 package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.components.aggregation;
 
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.MetadataFileNotFoundException;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.yaml.snakeyaml.Yaml;
 
@@ -18,7 +19,7 @@ class PropertiesValueReader {
         this.log = log;
     }
 
-    public Properties read(final String filePath) throws MetadataFileNotFoundException {
+    public List<Properties> read(final String filePath) throws MetadataFileNotFoundException {
         // Parsing filePath as URL
         final URL propertiesUrl;
         try {
@@ -26,16 +27,21 @@ class PropertiesValueReader {
         } catch (final MalformedURLException e) {
             throw new MetadataFileNotFoundException("Invalid file path " + filePath, e);
         }
+        final String extension = FilenameUtils.getExtension(propertiesUrl.getFile());
+        this.log.debug("Reading file '" + filePath + "' with extension '" + extension + "'");
 
-        final String extension = filePath.substring(filePath.lastIndexOf("."));
-        if (".properties".equalsIgnoreCase(extension)) {
-            return this.readAsProperties(propertiesUrl);
+        // Parsing as properties
+        if ("properties".equalsIgnoreCase(extension)) {
+            return Collections.singletonList(this.readAsProperties(propertiesUrl));
         }
-        if (".yml".equalsIgnoreCase(extension) || ".yaml".equalsIgnoreCase(extension)) {
+
+        // Parsing as yaml
+        if ("yml".equalsIgnoreCase(extension) || "yaml".equalsIgnoreCase(extension)) {
             return this.readAsYaml(propertiesUrl);
         }
 
-        throw new MetadataFileNotFoundException("Unsupported file extension " + extension + " for " + propertiesUrl);
+        // Not a valid extension
+        throw new MetadataFileNotFoundException("Unsupported file extension " + extension + " for " + propertiesUrl.getFile());
     }
 
     private Properties readAsProperties(final URL propertiesUrl) throws MetadataFileNotFoundException {
@@ -45,33 +51,51 @@ class PropertiesValueReader {
             // Parsing content
             final Properties properties = new Properties();
             properties.load(fileContent);
-            this.log.debug("Found " + properties.size() + " property values in file " + propertiesUrl);
 
-            // Returning parsed properties
-            return properties;
-        } catch (final IOException e) {
-            throw new MetadataFileNotFoundException("Failed reading " + propertiesUrl, e);
-        }
-    }
-
-    private Properties readAsYaml(final URL propertiesUrl) throws MetadataFileNotFoundException {
-        try (final InputStream fileContent = propertiesUrl.openStream()) {
-            this.log.debug("Found property values file " + propertiesUrl.getFile());
-
-            // Parsing content
-            final Properties properties = new Properties();
-            final Yaml yaml = new Yaml();
-            final Map<String, String> flattened = this.flatten(yaml.load(fileContent));
-            properties.putAll(flattened);
-            this.log.debug("Found " + properties.size() + " property values in file " + propertiesUrl);
-            for (final Map.Entry<Object, Object> entry : properties.entrySet()) {
-                this.log.debug("Found '" + entry.getKey() + "=" + entry.getValue() + "'");
+            // Logging all found properties for debug
+            if (this.log.isDebugEnabled()) {
+                this.log.debug("Found " + properties.size() + " property values in file " + propertiesUrl.getFile());
+                for (final Map.Entry<Object, Object> property : properties.entrySet()) {
+                    this.log.debug("Found '" + property.getKey() + "=" + property.getValue() + "'");
+                }
             }
 
             // Returning parsed properties
             return properties;
         } catch (final IOException e) {
-            throw new MetadataFileNotFoundException("Failed reading " + propertiesUrl, e);
+            throw new MetadataFileNotFoundException("Failed reading " + propertiesUrl.getFile(), e);
+        }
+    }
+
+    private List<Properties> readAsYaml(final URL propertiesUrl) throws MetadataFileNotFoundException {
+        final List<Properties> propertiesList = new ArrayList<>();
+
+        try (final InputStream fileContent = propertiesUrl.openStream()) {
+            this.log.debug("Found property values file " + propertiesUrl.getFile());
+
+            // Parsing content: yaml file may contain multiple documents
+            final Yaml yaml = new Yaml();
+            for (final Object group : yaml.loadAll(fileContent)) {
+                final Map<String, String> flattened = this.flatten((Map<String, Object>) group);
+                final Properties properties = new Properties();
+                properties.putAll(flattened);
+                propertiesList.add(properties);
+            }
+
+            // Logging all found properties for debug
+            if (this.log.isDebugEnabled()) {
+                for (final Properties properties : propertiesList) {
+                    this.log.debug("Found " + properties.size() + " property values in file " + propertiesUrl.getFile());
+                    for (Map.Entry<Object, Object> property : properties.entrySet()) {
+                        this.log.debug("Found '" + property.getKey() + "=" + property.getValue() + "'");
+                    }
+                }
+            }
+
+            // Returning parsed properties
+            return propertiesList;
+        } catch (final IOException e) {
+            throw new MetadataFileNotFoundException("Failed reading " + propertiesUrl.getFile(), e);
         }
     }
 

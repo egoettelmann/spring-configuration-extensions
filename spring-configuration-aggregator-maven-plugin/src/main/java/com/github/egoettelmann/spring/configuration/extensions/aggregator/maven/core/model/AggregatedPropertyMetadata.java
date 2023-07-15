@@ -3,6 +3,7 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class AggregatedPropertyMetadata {
@@ -11,6 +12,7 @@ public class AggregatedPropertyMetadata {
     private String type;
     private String description;
     private String defaultValue;
+    private Map<String, String> profiles;
     private List<Source> sourceTypes;
 
     @Data

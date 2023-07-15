@@ -71,7 +71,7 @@ public class DefaultReportingService implements ReportingService {
                 this.log.warn("No aggregation file found for previous version, skipping comparison");
                 this.log.debug(e);
             } catch (final Exception e) {
-                this.log.warn("Failed to compare with previous version", e);
+                this.log.warn("Failed to compare with previous version");
                 this.log.debug(e);
             }
 

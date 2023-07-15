@@ -4,6 +4,7 @@
     "type" : "java.lang.String",
     "description" : "Sample app title injected through @ConfigurationProperties",
     "defaultValue" : "Sample Application",
+    "profiles" : null,
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",
       "artifactId" : "spring-configuration-extensions-samples",
@@ -14,11 +15,14 @@
     "type" : "java.lang.String",
     "description" : "Custom config value injected by @Value.\n\nCustom config value injected by @Value, with default value referencing another config.",
     "defaultValue" : "Custom Config Value",
+    "profiles" : {
+      "sample2" : "Custom Config Value for sample2"
+    },
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",
       "artifactId" : "spring-configuration-extensions-samples",
       "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig"
-    },  {
+    }, {
       "groupId" : "com.github.egoettelmann",
       "artifactId" : "spring-configuration-extensions-samples",
       "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig2"
@@ -28,6 +32,7 @@
     "type" : "java.lang.String",
     "description" : "Custom config value injected by @Value, with default value referencing another config.\n",
     "defaultValue" : "${sample.custom.conf}",
+    "profiles" : null,
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",
       "artifactId" : "spring-configuration-extensions-samples",
@@ -37,7 +42,11 @@
     "name" : "sample.unicode.chars",
     "type" : "java.lang.String",
     "description" : "Config including unicode characters.\n",
-    "defaultValue" : "\u0000\u0001\u0002\u0003\u0004\u0005",
+    "defaultValue" : "-",
+    "profiles" : {
+      "sample" : "\\u0000\\u0001\\u0002\\u0003\\u0004\\u0005",
+      "sample2" : "-"
+    },
     "sourceTypes" : [ {
       "groupId" : "com.github.egoettelmann",
       "artifactId" : "spring-configuration-extensions-samples",

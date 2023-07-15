@@ -15,12 +15,12 @@ public class AggregationBuilder {
 
     private final Map<Pair<String, String>, List<PropertyMetadata>> artifactProperties;
 
-    private final Properties defaultValues;
+    private final Map<String, Properties> defaultValues;
 
     public AggregationBuilder(final Log log) {
         this.log = log;
         this.artifactProperties = new HashMap<>();
-        this.defaultValues = new Properties();
+        this.defaultValues = new HashMap<>();
     }
 
     public AggregationBuilder add(final List<PropertyMetadata> metadata, final String groupId, final String artifactId) {
@@ -38,8 +38,11 @@ public class AggregationBuilder {
         return this;
     }
 
-    public AggregationBuilder put(final Properties defaultValues) {
-        this.defaultValues.putAll(defaultValues);
+    public AggregationBuilder put(final String profile, final Properties properties) {
+        if (!this.defaultValues.containsKey(profile)) {
+            this.defaultValues.put(profile, new Properties());
+        }
+        this.defaultValues.get(profile).putAll(properties);
         return this;
     }
 
@@ -81,8 +84,22 @@ public class AggregationBuilder {
         aggregate.setName(property.getName());
         aggregate.setDefaultValue(property.getDefaultValue());
         // If a default value is defined, it overrides the already defined one
-        if (this.defaultValues.containsKey(property.getName())) {
-            aggregate.setDefaultValue(this.defaultValues.getProperty(property.getName()));
+        for (final Map.Entry<String, Properties> entry : this.defaultValues.entrySet()) {
+            final String profile = entry.getKey();
+            final Properties profileProperties = entry.getValue();
+            this.log.debug("Found " + profileProperties.size() + " values for profile " + profile);
+
+            if (!profileProperties.containsKey(property.getName())) {
+                continue;
+            }
+            if (DefaultAggregationService.DEFAULT_PROFILE.equals(profile)) {
+                aggregate.setDefaultValue(profileProperties.getProperty(property.getName()));
+                continue;
+            }
+            if (aggregate.getProfiles() == null) {
+                aggregate.setProfiles(new HashMap<>());
+            }
+            aggregate.getProfiles().put(profile, profileProperties.getProperty(property.getName()));
         }
         aggregate.setType(property.getType());
         aggregate.setDescription(property.getDescription());

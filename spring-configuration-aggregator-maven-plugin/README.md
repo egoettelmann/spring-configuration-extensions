@@ -28,8 +28,9 @@ All found files will then be merged into a single file, with following attribute
 - the `name` of the configuration property used
 - the `type` of the attribute
 - the `description` taken from the JavaDoc defined on the attribute (if any)
-- the `defaultValue` specified in the annotation (if any)
-- the `sourceTypes` the list of references to this property:
+- the `defaultValue` specified in the annotation, or in the properties file (if any)
+- the `profiles` maps all defined values per Spring profile
+- the `sourceTypes` lists all references to this property:
   - the `groupId`, the group id of the dependency
   - the `artifactId`, the artifact id of the dependency
   - the `sourceType`, the class referencing this property
@@ -68,6 +69,7 @@ The plugin can be configured through following properties:
 | `includeDependencies` | `List<DependencyMatcher>` | Specifies a list of dependencies to include for aggregation.                                                        |
 | `excludeDependencies` | `List<DependencyMatcher>` | Specifies a list of dependencies to exclude from aggregation.                                                       |
 | `propertiesFiles`     | `List<PropertiesFile>`    | Specifies a list of properties files to parse for default values.                                                   |
+| `profiles`            | `String`                  | Comma separated list of Spring profiles to include values for.                                                      |
 | `outputReports`       | `List<OutputReport>`      | Specifies a list of reports to generate.                                                                            |
 
 The `DependencyMatcher` type is defined with following properties:

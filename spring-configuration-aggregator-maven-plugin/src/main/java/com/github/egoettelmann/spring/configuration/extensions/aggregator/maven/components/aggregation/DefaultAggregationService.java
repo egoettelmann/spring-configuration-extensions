@@ -8,16 +8,18 @@ import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.OperationFailedException;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.PropertyMetadata;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.aether.artifact.Artifact;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class DefaultAggregationService implements AggregationService {
 
@@ -27,6 +29,8 @@ public class DefaultAggregationService implements AggregationService {
     );
 
     private static final String AGGREGATED_FILE = "/META-INF/aggregated-spring-configuration-metadata.json";
+
+    public final static String DEFAULT_PROFILE = "default";
 
     private final Log log;
 
@@ -58,7 +62,7 @@ public class DefaultAggregationService implements AggregationService {
     }
 
     @Override
-    public List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles) {
+    public List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles, final Set<String> profiles) {
         final AggregationBuilder builder = new AggregationBuilder(this.log);
 
         // Resolving from current project
@@ -79,12 +83,11 @@ public class DefaultAggregationService implements AggregationService {
         // Adding default values
         if (propertiesFiles != null) {
             for (final PropertiesFile propertiesFile : propertiesFiles) {
-                try {
-                    final Properties properties = this.propertiesValueReader.read("file:///" + propertiesFile.getPath());
-                    builder.put(properties);
-                } catch (final MetadataFileNotFoundException e) {
-                    this.log.warn("No properties found in " + propertiesFile.getPath());
-                    this.log.debug(e);
+                final Map<String, Properties> properties = this.loadPropertiesValues(propertiesFile.getPath());
+                for (final Map.Entry<String, Properties> entry : properties.entrySet()) {
+                    if (profiles == null || profiles.contains(entry.getKey())) {
+                        builder.put(entry.getKey(), entry.getValue());
+                    }
                 }
             }
         }
@@ -137,6 +140,68 @@ public class DefaultAggregationService implements AggregationService {
         }
 
         this.log.debug("Found metadata for " + properties.size() + " configuration properties in " + path);
+        return properties;
+    }
+
+    private Map<String, Properties> loadPropertiesValues(final String path) {
+        final Map<String, Properties> properties = new HashMap<>();
+        properties.put(DEFAULT_PROFILE, new Properties());
+
+        final File propertiesFile = new File(path);
+        try {
+            final List<Properties> propertiesList = this.propertiesValueReader.read("file:///" + path);
+            for (final Properties values : propertiesList) {
+                final String profiles = (String) values.getOrDefault("spring.profiles", values.get("spring.config.activate.on-profile"));
+                if (StringUtils.isBlank(profiles)) {
+                    properties.get(DEFAULT_PROFILE).putAll(values);
+                    continue;
+                }
+                for (final String profile : profiles.split(",")) {
+                    properties.putIfAbsent(profile.trim(), new Properties());
+                    properties.get(profile.trim()).putAll(values);
+                }
+            }
+        } catch (final MetadataFileNotFoundException e) {
+            this.log.warn("No properties found in " + path);
+            this.log.debug(e);
+        }
+
+        final File folder = propertiesFile.getParentFile();
+        final String baseName = FilenameUtils.getBaseName(propertiesFile.getName());
+        final String extension = FilenameUtils.getExtension(propertiesFile.getName());
+        final FileFilter fileFilter = new WildcardFileFilter(baseName + "-*." + extension);
+        this.log.debug("Looking up " + folder.getPath() + " for '" + baseName + "-*." + extension + "'");
+        final File[] files = folder.listFiles(fileFilter);
+        if (files == null) {
+            return properties;
+        }
+        this.log.debug("Found " + files.length + " profile specific files to parse");
+
+        // Reading profile specific files
+        for (final File file : files) {
+            try {
+                final String profile = FilenameUtils.getBaseName(file.getName()).replace(baseName + "-", "").trim();
+                this.log.debug("Parsing file " + file.getPath() + " for profile " + profile);
+                final List<Properties> profilePropertiesList = this.propertiesValueReader.read("file:///" + file.getPath());
+                for (final Properties values : profilePropertiesList) {
+                    final String subProfiles = (String) values.getOrDefault("spring.profiles", values.get("spring.config.activate.on-profile"));
+                    if (StringUtils.isBlank(subProfiles)) {
+                        properties.putIfAbsent(profile, new Properties());
+                        properties.get(profile).putAll(values);
+                        continue;
+                    }
+                    for (final String subProfile : subProfiles.split(",")) {
+                        final String combinedProfile = profile + " & " + subProfile.trim();
+                        properties.putIfAbsent(combinedProfile, new Properties());
+                        properties.get(combinedProfile).putAll(values);
+                    }
+                }
+            } catch (final Exception e) {
+                this.log.warn("Error reading profile specific file " + file.getPath());
+                this.log.debug(e);
+            }
+        }
+
         return properties;
     }
 

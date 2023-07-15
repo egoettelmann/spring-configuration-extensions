@@ -12,8 +12,8 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Aggregates all Spring Configuration Properties metadata into a single file.
@@ -26,6 +26,13 @@ public class AggregatorMojo extends AbstractPluginMojo {
      */
     @Parameter()
     private List<PropertiesFile> propertiesFiles;
+
+    /**
+     * Comma separated list of spring profiles to include for reading values ('*' for all, '-' for none).
+     * Default value: '*'.
+     */
+    @Parameter()
+    private String profiles;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -52,7 +59,10 @@ public class AggregatorMojo extends AbstractPluginMojo {
             );
 
             // Retrieving properties
-            final List<AggregatedPropertyMetadata> properties = aggregationService.aggregate(this.getPropertiesFiles());
+            final List<AggregatedPropertyMetadata> properties = aggregationService.aggregate(
+                    this.getPropertiesFiles(),
+                    this.getProfiles()
+            );
 
             // Saving properties
             aggregationService.save(properties);
@@ -79,4 +89,20 @@ public class AggregatorMojo extends AbstractPluginMojo {
         return files;
     }
 
+    private Set<String> getProfiles() {
+        // Default value: all found profiles (null)
+        if (this.profiles == null || this.profiles.equals("*")) {
+            return null;
+        }
+
+        // No profile included: empty set
+        if (this.profiles.equals("-")) {
+            return Collections.emptySet();
+        }
+
+        // Split and trim values
+        return Arrays.stream(this.profiles.split(","))
+                .map(String::trim)
+                .collect(Collectors.toSet());
+    }
 }
