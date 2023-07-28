@@ -2,8 +2,10 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 
 import lombok.Data;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 public class AggregatedPropertyMetadata {
@@ -13,7 +15,7 @@ public class AggregatedPropertyMetadata {
     private String description;
     private String defaultValue;
     private Map<String, String> profiles;
-    private List<Source> sourceTypes;
+    private Set<Source> sourceTypes;
 
     @Data
     public static class Wrapper {
@@ -21,10 +23,18 @@ public class AggregatedPropertyMetadata {
     }
 
     @Data
-    public static class Source {
+    public static class Source implements Comparable<Source> {
         private String groupId;
         private String artifactId;
         private String sourceType;
+
+        @Override
+        public int compareTo(final Source o) {
+            return Comparator.comparing(Source::getGroupId)
+                    .thenComparing(Source::getArtifactId)
+                    .thenComparing(Source::getSourceType)
+                    .compare(this, o);
+        }
     }
 
 }

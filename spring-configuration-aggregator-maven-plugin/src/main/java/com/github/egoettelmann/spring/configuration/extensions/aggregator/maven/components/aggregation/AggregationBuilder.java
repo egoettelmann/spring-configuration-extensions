@@ -83,27 +83,32 @@ public class AggregationBuilder {
         final AggregatedPropertyMetadata aggregate = new AggregatedPropertyMetadata();
         aggregate.setName(property.getName());
         aggregate.setDefaultValue(property.getDefaultValue());
-        // If a default value is defined, it overrides the already defined one
+        aggregate.setType(property.getType());
+        aggregate.setDescription(property.getDescription());
+
+        // Adding profile specific default values
         for (final Map.Entry<String, Properties> entry : this.defaultValues.entrySet()) {
             final String profile = entry.getKey();
             final Properties profileProperties = entry.getValue();
-            this.log.debug("Found " + profileProperties.size() + " values for profile " + profile);
-
             if (!profileProperties.containsKey(property.getName())) {
                 continue;
             }
+            this.log.debug("Found " + profileProperties.size() + " values for profile " + profile);
+
+            // Value from 'default' profile overrides default value defined in annotation
             if (DefaultAggregationService.DEFAULT_PROFILE.equals(profile)) {
                 aggregate.setDefaultValue(profileProperties.getProperty(property.getName()));
                 continue;
             }
+
+            // Adding profile specific default value
             if (aggregate.getProfiles() == null) {
-                aggregate.setProfiles(new HashMap<>());
+                aggregate.setProfiles(new TreeMap<>());
             }
             aggregate.getProfiles().put(profile, profileProperties.getProperty(property.getName()));
         }
-        aggregate.setType(property.getType());
-        aggregate.setDescription(property.getDescription());
-        aggregate.setSourceTypes(new ArrayList<>());
+
+        aggregate.setSourceTypes(new TreeSet<>());
         aggregate.getSourceTypes().add(this.create(property.getSourceType(), groupId, artifactId));
         return aggregate;
     }
