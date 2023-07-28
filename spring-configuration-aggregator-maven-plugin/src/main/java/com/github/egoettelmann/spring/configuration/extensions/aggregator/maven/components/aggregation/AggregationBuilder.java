@@ -70,6 +70,9 @@ public class AggregationBuilder {
                 // Property exists already: merging
                 final AggregatedPropertyMetadata aggregate = aggregationMap.get(property.getName());
                 this.merge(aggregate, property, groupId, artifactId);
+                // sorted SourceType list
+                aggregate.getSourceTypes().stream()
+                    .sorted(Comparator.comparing(source -> String.format("%s.%s.%s", source.getGroupId(), source.getArtifactId(), source.getSourceType()))).collect(Collectors.toList());
             }
         }
 
