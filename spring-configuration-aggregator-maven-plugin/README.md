@@ -44,7 +44,7 @@ You can simply add the project to the build plugin section.
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.5</version>
     <executions>
         <execution>
             <goals>
@@ -139,7 +139,7 @@ Simple aggregation, with following additional options:
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.5</version>
     <configuration>
         <!-- Ignores errors -->
         <failOnError>false</failOnError>
@@ -174,7 +174,7 @@ Simple aggregation, by only including properties from:
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.5</version>
     <configuration>
         <includeDependencies>
             <!-- Includes only metadata defined in dependencies with same 'groupId' as current project -->
@@ -201,7 +201,7 @@ Aggregation and reporting of all configuration properties.
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.5</version>
     <configuration>
         <outputReports>
             <!-- Generating default JSON report -->
@@ -240,7 +240,7 @@ Simple aggregation, that declares custom configuration files to load default val
 <plugin>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.5</version>
     <configuration>
         <!-- Loading default values from custom configuration file -->        
         <propertiesFiles>
