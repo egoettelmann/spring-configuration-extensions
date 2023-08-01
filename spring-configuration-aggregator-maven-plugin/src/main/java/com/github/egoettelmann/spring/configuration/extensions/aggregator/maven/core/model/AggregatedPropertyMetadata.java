@@ -1,11 +1,13 @@
 package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model;
 
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 @Data
 public class AggregatedPropertyMetadata {
@@ -30,10 +32,14 @@ public class AggregatedPropertyMetadata {
 
         @Override
         public int compareTo(final Source o) {
-            return Comparator.comparing(Source::getGroupId)
-                    .thenComparing(Source::getArtifactId)
-                    .thenComparing(Source::getSourceType)
-                    .compare(this, o);
+            return Comparator.comparing(defaultString(Source::getGroupId))
+                .thenComparing(defaultString(Source::getArtifactId))
+                .thenComparing(defaultString(Source::getSourceType))
+                .compare(this, o);
+        }
+
+        private Function<Source, String> defaultString(Function<Source, String> function) {
+            return source -> StringUtils.defaultString(function.apply(source));
         }
     }
 
