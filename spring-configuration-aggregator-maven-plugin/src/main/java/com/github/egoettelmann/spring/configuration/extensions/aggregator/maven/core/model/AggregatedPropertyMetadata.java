@@ -30,10 +30,14 @@ public class AggregatedPropertyMetadata {
 
         @Override
         public int compareTo(final Source o) {
-            return Comparator.comparing(Source::getGroupId)
-                    .thenComparing(Source::getArtifactId)
-                    .thenComparing(Source::getSourceType)
-                    .compare(this, o);
+            return Comparator.comparing(defaultString(Source::getGroupId))
+                .thenComparing(defaultString(Source::getArtifactId))
+                .thenComparing(defaultString(Source::getSourceType))
+                .compare(this, o);
+        }
+
+        private Function<Source, String> defaultString(Function<Source, String> function) {
+            return source -> StringUtils.defaultString(function.apply(source));
         }
     }
 
