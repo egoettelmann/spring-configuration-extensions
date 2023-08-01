@@ -3,6 +3,8 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.FilePath;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.JarFilePath;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.MetadataFileNotFoundException;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.OperationFailedException;
@@ -22,16 +24,13 @@ import java.net.URL;
 import java.util.*;
 
 public class DefaultAggregationService implements AggregationService {
-
     private static final List<String> METADATA_FILE_SET = Arrays.asList(
             "/META-INF/spring-configuration-metadata.json",
             "/META-INF/additional-spring-configuration-metadata.json"
     );
-
     private static final String AGGREGATED_FILE = "/META-INF/aggregated-spring-configuration-metadata.json";
 
     public final static String DEFAULT_PROFILE = "default";
-
     private final Log log;
 
     private final RepositoryService repositoryService;
@@ -67,7 +66,7 @@ public class DefaultAggregationService implements AggregationService {
 
         // Resolving from current project
         this.log.debug("Retrieving configuration properties metadata from current project");
-        final String projectPath = "file:///" + this.project.getBuild().getOutputDirectory();
+        final String projectPath = FilePath.getPath(this.project.getBuild().getOutputDirectory());
         final List<PropertyMetadata> projectProperties = this.readPropertiesFromPath(projectPath);
         builder.add(projectProperties, this.project.getGroupId(), this.project.getArtifactId());
 
@@ -75,7 +74,7 @@ public class DefaultAggregationService implements AggregationService {
         final List<Artifact> dependencies = this.repositoryService.resolveDependencies(this.project);
         this.log.debug("Retrieving configuration properties metadata from " + dependencies.size() + " dependencies");
         for (final Artifact dependency : dependencies) {
-            final String filePath = "jar:file:" + dependency.getFile().getAbsolutePath() + "!";
+            final String filePath = JarFilePath.getPath(dependency.getFile().getAbsolutePath());
             final List<PropertyMetadata> properties = this.readPropertiesFromPath(filePath);
             builder.add(properties, dependency.getGroupId(), dependency.getArtifactId());
         }
@@ -100,19 +99,17 @@ public class DefaultAggregationService implements AggregationService {
 
     @Override
     public List<AggregatedPropertyMetadata> load() throws MetadataFileNotFoundException {
-        final String aggregatedFilePath = "file:///" + this.project.getBuild().getOutputDirectory() + AGGREGATED_FILE;
-        return this.aggregatedPropertiesMetadataReader.read(aggregatedFilePath);
+        return this.aggregatedPropertiesMetadataReader.read(FilePath.getPath(this.project.getBuild().getOutputDirectory() + AGGREGATED_FILE));
     }
 
     @Override
     public List<AggregatedPropertyMetadata> load(final Artifact artifact) throws MetadataFileNotFoundException {
-        final String aggregatedFilePath = "jar:file:" + artifact.getFile().getAbsolutePath() + "!" + AGGREGATED_FILE;
-        return this.aggregatedPropertiesMetadataReader.read(aggregatedFilePath);
+        return this.aggregatedPropertiesMetadataReader.read(JarFilePath.getPath(artifact.getFile().getAbsolutePath(), AGGREGATED_FILE));
     }
 
     @Override
     public void save(final List<AggregatedPropertyMetadata> aggregatedProperties) throws OperationFailedException {
-        final String aggregatedFilePath = "file:///" + this.project.getBuild().getOutputDirectory() + AGGREGATED_FILE;
+        final String aggregatedFilePath = FilePath.getPath(this.project.getBuild().getOutputDirectory() + AGGREGATED_FILE);
 
         try {
             // Writing to file
@@ -149,7 +146,7 @@ public class DefaultAggregationService implements AggregationService {
 
         final File propertiesFile = new File(path);
         try {
-            final List<Properties> propertiesList = this.propertiesValueReader.read("file:///" + path);
+            final List<Properties> propertiesList = this.propertiesValueReader.read(FilePath.getPath(path));
             for (final Properties values : propertiesList) {
                 final String profiles = (String) values.getOrDefault("spring.profiles", values.get("spring.config.activate.on-profile"));
                 if (StringUtils.isBlank(profiles)) {
@@ -182,7 +179,7 @@ public class DefaultAggregationService implements AggregationService {
             try {
                 final String profile = FilenameUtils.getBaseName(file.getName()).replace(baseName + "-", "").trim();
                 this.log.debug("Parsing file " + file.getPath() + " for profile " + profile);
-                final List<Properties> profilePropertiesList = this.propertiesValueReader.read("file:///" + file.getPath());
+                final List<Properties> profilePropertiesList = this.propertiesValueReader.read(FilePath.getPath(file.getPath()));
                 for (final Properties values : profilePropertiesList) {
                     final String subProfiles = (String) values.getOrDefault("spring.profiles", values.get("spring.config.activate.on-profile"));
                     if (StringUtils.isBlank(subProfiles)) {
