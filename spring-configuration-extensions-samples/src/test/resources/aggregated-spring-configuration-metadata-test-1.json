@@ -52,5 +52,16 @@
       "artifactId" : "spring-configuration-extensions-samples",
       "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleConfig"
     } ]
+  }, {
+    "name" : "test.for.additional",
+    "type" : "java.lang.String",
+    "description" : "Test for additional",
+    "defaultValue" : null,
+    "profiles" : null,
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples",
+      "sourceType" : null
+    } ]
   } ]
 }

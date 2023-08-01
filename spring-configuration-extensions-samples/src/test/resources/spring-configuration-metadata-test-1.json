@@ -12,6 +12,11 @@
       "type": "java.lang.String",
       "description": "Sample app title injected through @ConfigurationProperties",
       "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples.config.SampleProperties"
+    },
+    {
+      "name": "test.for.additional",
+      "type": "java.lang.String",
+      "description": "Test for additional"
     }
   ],
   "hints": []
