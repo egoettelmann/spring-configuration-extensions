@@ -15,6 +15,7 @@ public interface AggregationService {
      * Aggregates all configuration properties metadata of the current project.
      * Combines all metadata files from the project and of its dependencies.
      *
+     * @param additionalFiles the list of json files from which to retrieve additional from
      * @param propertiesFiles the list of properties files to extract default values from
      * @param profiles the list of spring profiles to extract default values from (can be null to accept all)
      * @return the list of aggregated properties metadata
