@@ -139,7 +139,7 @@ public class DefaultAggregationService implements AggregationService {
                 this.log.debug("Found metadata for " + metadata.size() + " configuration properties in " + filePath);
                 properties.addAll(metadata);
             } catch (final MetadataFileNotFoundException e) {
-                this.log.debug("No metadata for configuration properties found in " + filePath);
+                this.log.debug("No metadata for configuration properties found in " + filePath, e);
             }
         }
 

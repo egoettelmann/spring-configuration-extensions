@@ -15,7 +15,7 @@ public class AggregatedPropertyMetadata {
     private String name;
     private String type;
     private String description;
-    private String defaultValue;
+    private Object defaultValue;
     private Map<String, String> profiles;
     private Set<Source> sourceTypes;
 
