@@ -17,11 +17,12 @@ import java.util.List;
 import java.util.Set;
 
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
-@SupportedOptions({"failOnError"})
+@SupportedOptions({"failOnError", "targetFilePathForAdditionalSpringValueConfiguration"})
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
     private static final String TARGET_PACKAGE = "";
     private static final String TARGET_FILE_NAME = "META-INF/additional-spring-configuration-metadata.json";
+    private static final String TARGET_FILE_PATH_ARG_NAME = "targetFilePathForAdditionalSpringValueConfiguration";
 
     private ElementReader elementReader;
 
@@ -77,7 +78,7 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
                 .createResource(
                         StandardLocation.CLASS_OUTPUT,
                         TARGET_PACKAGE,
-                        TARGET_FILE_NAME
+                    this.processingEnv.getOptions().getOrDefault(TARGET_FILE_PATH_ARG_NAME, TARGET_FILE_NAME)
                 ).openWriter();
     }
 }

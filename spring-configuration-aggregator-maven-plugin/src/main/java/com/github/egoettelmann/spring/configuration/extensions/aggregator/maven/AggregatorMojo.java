@@ -4,6 +4,7 @@ import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.components.repository.DefaultRepositoryService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.AdditionalFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -20,6 +21,12 @@ import java.util.stream.Collectors;
  */
 @Mojo(name = "aggregate", defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 public class AggregatorMojo extends AbstractPluginMojo {
+
+    /**
+     * The list of json files from which to retrieve additional from.
+     */
+    @Parameter()
+    private List<AdditionalFile> additionalFiles;
 
     /**
      * The list of properties files from which to retrieve defaultValues from.
@@ -60,6 +67,7 @@ public class AggregatorMojo extends AbstractPluginMojo {
 
             // Retrieving properties
             final List<AggregatedPropertyMetadata> properties = aggregationService.aggregate(
+                    this.additionalFiles,
                     this.getPropertiesFiles(),
                     this.getProfiles()
             );

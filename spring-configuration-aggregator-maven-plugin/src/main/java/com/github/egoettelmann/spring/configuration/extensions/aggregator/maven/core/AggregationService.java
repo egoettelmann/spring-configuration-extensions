@@ -1,5 +1,6 @@
 package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core;
 
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.AdditionalFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.MetadataFileNotFoundException;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
@@ -18,7 +19,7 @@ public interface AggregationService {
      * @param profiles the list of spring profiles to extract default values from (can be null to accept all)
      * @return the list of aggregated properties metadata
      */
-    List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles, final Set<String> profiles);
+    List<AggregatedPropertyMetadata> aggregate(final List<AdditionalFile> additionalFiles, final List<PropertiesFile> propertiesFiles, final Set<String> profiles);
 
     /**
      * Loads the aggregated configuration properties metadata of the current project.

@@ -3,6 +3,7 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.AdditionalFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.FilePath;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.JarFilePath;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
@@ -24,10 +25,12 @@ import java.net.URL;
 import java.util.*;
 
 public class DefaultAggregationService implements AggregationService {
-    private static final List<String> METADATA_FILE_SET = Arrays.asList(
-            "/META-INF/spring-configuration-metadata.json",
-            "/META-INF/additional-spring-configuration-metadata.json"
-    );
+
+    private static final List<AdditionalFile> METADATA_FILE_SET = new ArrayList<AdditionalFile>(){{
+        add(new AdditionalFile("/META-INF/spring-configuration-metadata.json"));
+        add(new AdditionalFile("/META-INF/additional-spring-configuration-metadata.json"));
+    }};
+
     private static final String AGGREGATED_FILE = "/META-INF/aggregated-spring-configuration-metadata.json";
 
     public final static String DEFAULT_PROFILE = "default";
@@ -61,8 +64,12 @@ public class DefaultAggregationService implements AggregationService {
     }
 
     @Override
-    public List<AggregatedPropertyMetadata> aggregate(final List<PropertiesFile> propertiesFiles, final Set<String> profiles) {
+    public List<AggregatedPropertyMetadata> aggregate(final List<AdditionalFile> additionalFiles, final List<PropertiesFile> propertiesFiles, final Set<String> profiles) {
         final AggregationBuilder builder = new AggregationBuilder(this.log);
+
+        if (additionalFiles != null && additionalFiles.size() > 0) {
+            METADATA_FILE_SET.addAll(additionalFiles);
+        }
 
         // Resolving from current project
         this.log.debug("Retrieving configuration properties metadata from current project");
@@ -124,8 +131,8 @@ public class DefaultAggregationService implements AggregationService {
         final List<PropertyMetadata> properties = new ArrayList<>();
 
         // Checking each file
-        for (final String metadataFile : METADATA_FILE_SET) {
-            final String filePath = path + metadataFile;
+        for (final AdditionalFile metadataFile : METADATA_FILE_SET) {
+            final String filePath = path + File.separator + metadataFile.getPath();
             try {
                 // Parsing file
                 final List<PropertyMetadata> metadata = this.propertiesMetadataReader.read(filePath);
