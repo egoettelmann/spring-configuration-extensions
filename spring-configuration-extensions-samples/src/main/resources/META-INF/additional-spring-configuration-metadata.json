@@ -1,9 +1,0 @@
-{
-    "properties": [
-        {
-            "name": "test.for.additional",
-            "type": "java.lang.String",
-            "description": "Test for additional"
-        }
-    ]
-}

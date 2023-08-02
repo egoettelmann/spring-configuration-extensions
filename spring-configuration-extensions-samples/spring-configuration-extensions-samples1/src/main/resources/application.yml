@@ -1,0 +1,19 @@
+sample1:
+  app:
+    title: "Sample Application"
+  custom:
+    conf: "Custom Config Value"
+
+---
+spring:
+  config.activate.on-profile: default,profile2
+sample1:
+  unicode:
+    chars: "-"
+
+---
+spring:
+  config.activate.on-profile: profile2
+sample1:
+  custom:
+    conf: "Custom Config Value for profile 'profile2'"

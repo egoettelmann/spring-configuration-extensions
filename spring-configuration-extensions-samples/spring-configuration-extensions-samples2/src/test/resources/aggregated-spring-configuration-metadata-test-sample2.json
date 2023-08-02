@@ -1,0 +1,47 @@
+{
+  "properties" : [ {
+    "name" : "sample2.app.title",
+    "type" : "java.lang.String",
+    "description" : "Sample app title injected through @ConfigurationProperties",
+    "defaultValue" : null,
+    "profiles" : null,
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples2",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Properties"
+    } ]
+  }, {
+    "name" : "sample2.custom.conf",
+    "type" : "java.lang.String",
+    "description" : "Custom config value injected by @Value.\n",
+    "defaultValue" : null,
+    "profiles" : null,
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples2",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Config"
+    } ]
+  }, {
+    "name" : "sample2.unicode.chars",
+    "type" : "java.lang.String",
+    "description" : "Config including unicode characters.\n",
+    "defaultValue" : null,
+    "profiles" : null,
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples2",
+      "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Config"
+    } ]
+  }, {
+    "name" : "test.for.additional",
+    "type" : "java.lang.String",
+    "description" : "Test for additional property",
+    "defaultValue" : null,
+    "profiles" : null,
+    "sourceTypes" : [ {
+      "groupId" : "com.github.egoettelmann",
+      "artifactId" : "spring-configuration-extensions-samples2",
+      "sourceType" : null
+    } ]
+  } ]
+}

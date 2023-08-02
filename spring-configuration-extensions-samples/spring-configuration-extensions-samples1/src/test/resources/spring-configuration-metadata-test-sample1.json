@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "sample1.app",
+      "type": "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Properties",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Properties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sample1.app.title",
+      "type": "java.lang.String",
+      "description": "Sample app title injected through @ConfigurationProperties",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Properties"
+    }
+  ],
+  "hints": []
+}

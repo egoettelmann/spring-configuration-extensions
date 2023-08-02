@@ -1,0 +1,23 @@
+{
+  "groups": [
+    {
+      "name": "sample2.app",
+      "type": "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Properties",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Properties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "sample2.app.title",
+      "type": "java.lang.String",
+      "description": "Sample app title injected through @ConfigurationProperties",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Properties"
+    },
+    {
+      "name": "test.for.additional",
+      "type": "java.lang.String",
+      "description": "Test for additional property"
+    }
+  ],
+  "hints": []
+}

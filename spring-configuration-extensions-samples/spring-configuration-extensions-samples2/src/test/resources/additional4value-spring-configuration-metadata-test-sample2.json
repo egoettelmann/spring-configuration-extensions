@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "sample2.custom.conf",
+      "type": "java.lang.String",
+      "description": "Custom config value injected by @Value.\n",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Config",
+      "defaultValue": null
+    },
+    {
+      "name": "sample2.unicode.chars",
+      "type": "java.lang.String",
+      "description": "Config including unicode characters.\n",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples2.config.Sample2Config",
+      "defaultValue": null
+    }
+  ]
+}
