@@ -6,6 +6,7 @@ import com.github.egoettelmann.spring.configuration.extensions.annotationprocess
 import com.github.egoettelmann.spring.configuration.extensions.annotationprocessor.value.writer.JsonWriter;
 
 import javax.annotation.processing.*;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
 @SupportedOptions({"failOnError", "targetFilePathForAdditionalSpringValueConfiguration"})
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
     private static final String TARGET_PACKAGE = "";
