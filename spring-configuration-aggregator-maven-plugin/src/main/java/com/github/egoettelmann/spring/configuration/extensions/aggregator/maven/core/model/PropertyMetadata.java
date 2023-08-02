@@ -10,7 +10,7 @@ public class PropertyMetadata {
     private String name;
     private String type;
     private String description;
-    private String defaultValue;
+    private Object defaultValue;
     private String sourceType;
 
     @Data

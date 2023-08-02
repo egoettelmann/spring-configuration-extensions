@@ -8,6 +8,7 @@ import org.apache.maven.plugin.logging.Log;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MetadataComparator {
@@ -76,7 +77,7 @@ public class MetadataComparator {
         if (!StringUtils.equalsIgnoreCase(current.getType(), previous.getType())) {
             return true;
         }
-        if (!StringUtils.equalsIgnoreCase(current.getDefaultValue(), previous.getDefaultValue())) {
+        if (!Objects.equals(current.getDefaultValue(), previous.getDefaultValue())) {
             return true;
         }
         return false;
