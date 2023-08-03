@@ -45,9 +45,12 @@ After executing `mvn clean package`, you can find the `additional-spring-configu
 
 ### Additional compiler options
 
-Following additional option is available: `failOnError`.
-This option is by default `false`.
-If defined at `true`, the annotation processor will fail if a property cannot be parsed.
+Following additional options are available:
+
+| Property              | Type      | Description                                                                                         |
+|-----------------------|-----------|-----------------------------------------------------------------------------------------------------|
+| `failOnError`         | `boolean` | Specifies if errors during the processing should make the build fail. Default: `false`.             |
+| `metadataOutputFile`  | `String`  | Defines a different output file. Default: `META-INF/additional-spring-configuration-metadata.json`. |
 
 Configuration would be as follows:
 ```xml
@@ -66,7 +69,29 @@ Configuration would be as follows:
         </annotationProcessorPaths>
         <compilerArgs>
             <arg>-AfailOnError=true</arg>
+            <arg>-AmetadataOutputFile=META-INF/additional4value-spring-configuration-metadata.json</arg>
         </compilerArgs>
     </configuration>
 </plugin>
 ```
+
+Known issues
+------------
+
+List of known issues and how to avoid/fix them.
+
+### Using custom additional spring configuration metadata [#10](https://github.com/egoettelmann/spring-configuration-extensions/issues/10)
+
+If defining a custom `additional-spring-configuration-metadata.json`
+in your resources (as described by the [Spring documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html#appendix.configuration-metadata.annotation-processor.adding-additional-metadata)),
+in combination with the [spring-boot-configuration-processor](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-configuration-processor/),
+you will get following error during the build:
+```
+javax.annotation.processing.FilerException: Attempt to reopen a file for path /META-INF/additional-spring-configuration-metadata.json
+```
+
+This is because both annotation processors, `spring-boot-configuration-processor` and `spring-value-annotation-processor` try to create the same file. 
+As Java specifications [JSR-269](https://jcp.org/en/jsr/detail?id=269) for annotation processing does not allow reopening an already written file, the execution fails.
+
+The solution is to specify a different output file using the `-AmetadataOutputFile` compiler option, to prevent any conflict.
+

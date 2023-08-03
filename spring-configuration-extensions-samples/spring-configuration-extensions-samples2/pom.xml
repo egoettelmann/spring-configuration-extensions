@@ -77,7 +77,7 @@
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-AfailOnError=true</arg>
-                        <arg>-AtargetFilePathForAdditionalSpringValueConfiguration=META-INF/additional4value-spring-configuration-metadata.json</arg>
+                        <arg>-AmetadataOutputFile=META-INF/additional4value-spring-configuration-metadata.json</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>

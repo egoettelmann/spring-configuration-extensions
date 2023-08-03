@@ -18,24 +18,29 @@ import java.util.List;
 import java.util.Set;
 
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
-@SupportedOptions({"failOnError", "targetFilePathForAdditionalSpringValueConfiguration"})
+@SupportedOptions({ValueAnnotationProcessor.ARG_FAIL_ON_ERROR, ValueAnnotationProcessor.ARG_METADATA_OUTPUT_FILE})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
-    private static final String TARGET_PACKAGE = "";
-    private static final String TARGET_FILE_NAME = "META-INF/additional-spring-configuration-metadata.json";
-    private static final String TARGET_FILE_PATH_ARG_NAME = "targetFilePathForAdditionalSpringValueConfiguration";
+    public static final String ARG_FAIL_ON_ERROR = "failOnError";
 
-    private ElementReader elementReader;
+    public static final String ARG_METADATA_OUTPUT_FILE = "metadataOutputFile";
+
+    private static final String TARGET_PACKAGE = "";
 
     private boolean failOnError = false;
+
+    private String metadataOutputFile = "META-INF/additional-spring-configuration-metadata.json";
+
+    private ElementReader elementReader;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         this.elementReader = new ElementReader(processingEnv.getElementUtils());
-        final String failOnError = processingEnv.getOptions().get("failOnError");
+        final String failOnError = processingEnv.getOptions().get(ValueAnnotationProcessor.ARG_FAIL_ON_ERROR);
         this.failOnError = Boolean.parseBoolean(failOnError);
+        this.metadataOutputFile = processingEnv.getOptions().getOrDefault(ValueAnnotationProcessor.ARG_METADATA_OUTPUT_FILE, this.metadataOutputFile);
     }
 
     @Override
@@ -80,7 +85,7 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
                 .createResource(
                         StandardLocation.CLASS_OUTPUT,
                         TARGET_PACKAGE,
-                    this.processingEnv.getOptions().getOrDefault(TARGET_FILE_PATH_ARG_NAME, TARGET_FILE_NAME)
+                        this.metadataOutputFile
                 ).openWriter();
     }
 }
