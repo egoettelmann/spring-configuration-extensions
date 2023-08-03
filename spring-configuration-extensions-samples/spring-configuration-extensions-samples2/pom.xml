@@ -87,7 +87,7 @@
                 <version>${project.version}</version>
                 <configuration>
                     <additionalFiles>
-                        <additionalFile>META-INF/additional4value-spring-configuration-metadata.json</additionalFile>
+                        <additionalFile>/META-INF/additional4value-spring-configuration-metadata.json</additionalFile>
                     </additionalFiles>
                     <outputReports>
                         <outputReport>

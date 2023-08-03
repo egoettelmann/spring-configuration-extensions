@@ -14,7 +14,7 @@ public class JarFilePath {
     private String path;
 
     public static String getPath(String jar) {
-        return getPath(jar, null);
+        return getPath(jar, "");
     }
 
     public static String getPath(String jar, String path) {

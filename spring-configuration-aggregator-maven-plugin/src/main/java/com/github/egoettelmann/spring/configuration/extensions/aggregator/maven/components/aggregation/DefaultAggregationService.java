@@ -132,7 +132,7 @@ public class DefaultAggregationService implements AggregationService {
 
         // Checking each file
         for (final AdditionalFile metadataFile : METADATA_FILE_SET) {
-            final String filePath = path + File.separator + metadataFile.getPath();
+            final String filePath = path + metadataFile.getPath();
             try {
                 // Parsing file
                 final List<PropertyMetadata> metadata = this.propertiesMetadataReader.read(filePath);
