@@ -16,7 +16,7 @@ If using Maven, you can simply add the project as a `provided` dependency.
 <dependency>
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-value-annotation-processor</artifactId>
-    <version>0.1.6</version>
+    <version>0.1.7-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -34,7 +34,7 @@ The plugin's configuration should look to something like the following:
             <annotationProcessorPath>
                 <groupId>com.github.egoettelmann</groupId>
                 <artifactId>spring-value-annotation-processor</artifactId>
-                <version>0.1.6</version>
+                <version>0.1.7-SNAPSHOT</version>
             </annotationProcessorPath>
         </annotationProcessorPaths>
     </configuration>
@@ -64,7 +64,7 @@ Configuration would be as follows:
             <annotationProcessorPath>
                 <groupId>com.github.egoettelmann</groupId>
                 <artifactId>spring-value-annotation-processor</artifactId>
-                <version>0.1.6</version>
+                <version>0.1.7-SNAPSHOT</version>
             </annotationProcessorPath>
         </annotationProcessorPaths>
         <compilerArgs>

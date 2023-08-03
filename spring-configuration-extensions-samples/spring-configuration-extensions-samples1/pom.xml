@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.egoettelmann</groupId>
         <artifactId>spring-configuration-extensions-samples</artifactId>
-        <version>0.1.6</version>
+        <version>0.1.7-SNAPSHOT</version>
     </parent>
 
     <artifactId>spring-configuration-extensions-samples1</artifactId>
