@@ -113,7 +113,7 @@ class PropertiesValueReader {
         for (final Map.Entry<String, Object> entry : hierarchicalMap.entrySet()) {
             final String key = entry.getKey();
             final Object value = entry.getValue();
-            flatMap.put(key, value.toString());
+            flatMap.put(key, Objects.toString(value, ""));
             if (value instanceof Map) {
                 final Map<String, Object> nested = (Map<String, Object>) value;
                 final Map<String, String> flatNested = this.flatten(nested);
