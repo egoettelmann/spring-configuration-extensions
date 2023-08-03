@@ -47,24 +47,34 @@
 
     <build>
         <plugins>
+            <!-- No source generation for samples -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.3.0</version>
                 <configuration>
                     <skipSource>true</skipSource>
                 </configuration>
-                <inherited>false</inherited>
             </plugin>
 
+            <!-- No javadoc generation for samples -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.5.0</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-                <inherited>false</inherited>
+            </plugin>
+
+            <!-- No deploy for samples -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>
