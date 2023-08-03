@@ -4,7 +4,7 @@ import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.components.repository.DefaultRepositoryService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
-import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.AdditionalFile;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.MetadataFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -23,13 +23,13 @@ import java.util.stream.Collectors;
 public class AggregatorMojo extends AbstractPluginMojo {
 
     /**
-     * The list of json files from which to retrieve additional from.
+     * The list of json files to retrieve additional configuration metadata from.
      */
     @Parameter()
-    private List<AdditionalFile> additionalFiles;
+    private List<MetadataFile> additionalMetadataFiles;
 
     /**
-     * The list of properties files from which to retrieve defaultValues from.
+     * The list of properties files to retrieve defaultValues from.
      */
     @Parameter()
     private List<PropertiesFile> propertiesFiles;
@@ -67,7 +67,7 @@ public class AggregatorMojo extends AbstractPluginMojo {
 
             // Retrieving properties
             final List<AggregatedPropertyMetadata> properties = aggregationService.aggregate(
-                    this.additionalFiles,
+                    this.getAdditionalMetadataFiles(),
                     this.getPropertiesFiles(),
                     this.getProfiles()
             );
@@ -95,6 +95,14 @@ public class AggregatorMojo extends AbstractPluginMojo {
         files.add(new PropertiesFile(resourcesFolder + "/application.yml"));
         files.add(new PropertiesFile(resourcesFolder + "/application.properties"));
         return files;
+    }
+
+    private List<MetadataFile> getAdditionalMetadataFiles() {
+        if (this.additionalMetadataFiles != null) {
+            return this.additionalMetadataFiles;
+        }
+
+        return Collections.emptyList();
     }
 
     private Set<String> getProfiles() {

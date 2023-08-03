@@ -3,14 +3,14 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import lombok.Data;
 
 @Data
-public class AdditionalFile {
+public class MetadataFile {
 
     private String path;
 
-    public AdditionalFile() {
+    public MetadataFile() {
     }
 
-    public AdditionalFile(String path) {
+    public MetadataFile(String path) {
         this.path = path;
     }
 

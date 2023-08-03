@@ -3,9 +3,9 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
-import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.AdditionalFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.FilePath;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.JarFilePath;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.MetadataFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.PropertiesFile;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.MetadataFileNotFoundException;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.OperationFailedException;
@@ -26,14 +26,15 @@ import java.util.*;
 
 public class DefaultAggregationService implements AggregationService {
 
-    private static final List<AdditionalFile> METADATA_FILE_SET = new ArrayList<AdditionalFile>(){{
-        add(new AdditionalFile("/META-INF/spring-configuration-metadata.json"));
-        add(new AdditionalFile("/META-INF/additional-spring-configuration-metadata.json"));
+    private static final List<MetadataFile> METADATA_FILE_SET = new ArrayList<MetadataFile>() {{
+        add(new MetadataFile("/META-INF/spring-configuration-metadata.json"));
+        add(new MetadataFile("/META-INF/additional-spring-configuration-metadata.json"));
     }};
 
     private static final String AGGREGATED_FILE = "/META-INF/aggregated-spring-configuration-metadata.json";
 
     public final static String DEFAULT_PROFILE = "default";
+
     private final Log log;
 
     private final RepositoryService repositoryService;
@@ -64,17 +65,19 @@ public class DefaultAggregationService implements AggregationService {
     }
 
     @Override
-    public List<AggregatedPropertyMetadata> aggregate(final List<AdditionalFile> additionalFiles, final List<PropertiesFile> propertiesFiles, final Set<String> profiles) {
+    public List<AggregatedPropertyMetadata> aggregate(final List<MetadataFile> additionalMetadataFiles, final List<PropertiesFile> propertiesFiles, final Set<String> profiles) {
         final AggregationBuilder builder = new AggregationBuilder(this.log);
 
-        if (additionalFiles != null && additionalFiles.size() > 0) {
-            METADATA_FILE_SET.addAll(additionalFiles);
+        // Defining list of metadata files to search for
+        final List<MetadataFile> metadataFiles = new ArrayList<>(METADATA_FILE_SET);
+        if (additionalMetadataFiles != null && !additionalMetadataFiles.isEmpty()) {
+            metadataFiles.addAll(additionalMetadataFiles);
         }
 
         // Resolving from current project
         this.log.debug("Retrieving configuration properties metadata from current project");
         final String projectPath = FilePath.getPath(this.project.getBuild().getOutputDirectory());
-        final List<PropertyMetadata> projectProperties = this.readPropertiesFromPath(projectPath);
+        final List<PropertyMetadata> projectProperties = this.readPropertiesFromPath(projectPath, metadataFiles);
         builder.add(projectProperties, this.project.getGroupId(), this.project.getArtifactId());
 
         // Resolving from dependencies
@@ -82,7 +85,7 @@ public class DefaultAggregationService implements AggregationService {
         this.log.debug("Retrieving configuration properties metadata from " + dependencies.size() + " dependencies");
         for (final Artifact dependency : dependencies) {
             final String filePath = JarFilePath.getPath(dependency.getFile().getAbsolutePath());
-            final List<PropertyMetadata> properties = this.readPropertiesFromPath(filePath);
+            final List<PropertyMetadata> properties = this.readPropertiesFromPath(filePath, metadataFiles);
             builder.add(properties, dependency.getGroupId(), dependency.getArtifactId());
         }
 
@@ -127,11 +130,11 @@ public class DefaultAggregationService implements AggregationService {
         }
     }
 
-    private List<PropertyMetadata> readPropertiesFromPath(final String path) {
+    private List<PropertyMetadata> readPropertiesFromPath(final String path, final List<MetadataFile> metadataFiles) {
         final List<PropertyMetadata> properties = new ArrayList<>();
 
         // Checking each file
-        for (final AdditionalFile metadataFile : METADATA_FILE_SET) {
+        for (final MetadataFile metadataFile : metadataFiles) {
             final String filePath = path + metadataFile.getPath();
             try {
                 // Parsing file

@@ -61,16 +61,17 @@ After executing `mvn clean package`, you can find the `aggregated-spring-configu
 
 The plugin can be configured through following properties:
 
-| Property              | Type                      | Description                                                                                                         |
-|-----------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `skip`                | `boolean`                 | Allows to skip the execution. Default: `false`.                                                                     |
-| `failOnError`         | `boolean`                 | Specifies if errors during the aggregation should make the build fail. Default: `true`.                             |
-| `aggregationFile`     | `String`                  | The output file. Default: `${project.build.outputDirectory}/META-INF/aggregated-spring-configuration-metadata.json` |
-| `includeDependencies` | `List<DependencyMatcher>` | Specifies a list of dependencies to include for aggregation.                                                        |
-| `excludeDependencies` | `List<DependencyMatcher>` | Specifies a list of dependencies to exclude from aggregation.                                                       |
-| `propertiesFiles`     | `List<PropertiesFile>`    | Specifies a list of properties files to parse for default values.                                                   |
-| `profiles`            | `String`                  | Comma separated list of Spring profiles to include values for.                                                      |
-| `outputReports`       | `List<OutputReport>`      | Specifies a list of reports to generate.                                                                            |
+| Property                  | Type                      | Description                                                                                                         |
+|---------------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `skip`                    | `boolean`                 | Allows to skip the execution. Default: `false`.                                                                     |
+| `failOnError`             | `boolean`                 | Specifies if errors during the aggregation should make the build fail. Default: `true`.                             |
+| `aggregationFile`         | `String`                  | The output file. Default: `${project.build.outputDirectory}/META-INF/aggregated-spring-configuration-metadata.json` |
+| `includeDependencies`     | `List<DependencyMatcher>` | Specifies a list of dependencies to include for aggregation.                                                        |
+| `excludeDependencies`     | `List<DependencyMatcher>` | Specifies a list of dependencies to exclude from aggregation.                                                       |
+| `propertiesFiles`         | `List<PropertiesFile>`    | Specifies a list of properties files to parse for default values.                                                   |
+| `additionalMetadataFiles` | `List<MetadataFile>`      | Specifies a list of json files to retrieve additional configuration metadata from.                                  |
+| `profiles`                | `String`                  | Comma separated list of Spring profiles to include values for.                                                      |
+| `outputReports`           | `List<OutputReport>`      | Specifies a list of reports to generate.                                                                            |
 
 The `DependencyMatcher` type is defined with following properties:
 
@@ -86,6 +87,11 @@ Supported file types are: `.properties`, `.yml` and `.yaml`.
 By default, following files are loaded:
 - `${project.baseDir}/src/main/resources/application.yml`
 - `${project.baseDir}/src/main/resources/application.properties`
+
+The `MetadataFile` type is a string defining a file path.
+In any case, following files are looked up:
+- `/META-INF/spring-configuration-metadata.json`
+- `/META-INF/additional-spring-configuration-metadata.json`
 
 The `OutputReport` type is defined with following properties:
 
@@ -127,6 +133,8 @@ Check the below _samples_ section to view the usage
 ### Samples
 
 Some examples configurations are given below.
+
+For full working examples have a look into [spring-configuration-extensions-samples](../spring-configuration-extensions-samples/README.md).
 
 #### Sample 1
 

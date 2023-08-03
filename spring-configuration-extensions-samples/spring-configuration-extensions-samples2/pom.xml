@@ -86,9 +86,9 @@
                 <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <additionalFiles>
-                        <additionalFile>/META-INF/additional4value-spring-configuration-metadata.json</additionalFile>
-                    </additionalFiles>
+                    <additionalMetadataFiles>
+                        <metadataFile>/META-INF/additional4value-spring-configuration-metadata.json</metadataFile>
+                    </additionalMetadataFiles>
                     <outputReports>
                         <outputReport>
                             <type>json</type>
