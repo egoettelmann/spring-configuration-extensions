@@ -21,7 +21,6 @@ import org.eclipse.aether.artifact.Artifact;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 public class DefaultAggregationService implements AggregationService {
@@ -123,8 +122,7 @@ public class DefaultAggregationService implements AggregationService {
 
         try {
             // Writing to file
-            final URL url = new URL(aggregatedFilePath);
-            this.aggregatedPropertiesMetadataWriter.write(aggregatedProperties, url);
+            this.aggregatedPropertiesMetadataWriter.write(aggregatedProperties, aggregatedFilePath);
         } catch (IOException e) {
             throw new OperationFailedException("Failed to write to file " + aggregatedFilePath, e);
         }

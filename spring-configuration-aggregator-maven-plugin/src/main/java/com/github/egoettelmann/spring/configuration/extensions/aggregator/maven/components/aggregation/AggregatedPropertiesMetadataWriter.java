@@ -20,7 +20,8 @@ class AggregatedPropertiesMetadataWriter {
         this.objectMapper = objectMapper;
     }
 
-    public void write(final List<AggregatedPropertyMetadata> aggregate, final URL aggregatedMetadataUrl) throws IOException {
+    public void write(final List<AggregatedPropertyMetadata> aggregate, final String aggregatedMetadataFile) throws IOException {
+        final URL aggregatedMetadataUrl = new URL(aggregatedMetadataFile);
         final File outputFile = new File(aggregatedMetadataUrl.getFile());
         if (outputFile.getParentFile().mkdirs()) {
             this.log.debug("Created folder " + outputFile.getParentFile());
