@@ -213,28 +213,84 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- Build -->
     <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Compilation -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                </plugin>
+
+                <!-- Dependencies -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+
+                <!-- Unit tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+
+                <!-- Integration tests-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+
+                <!-- Attach sources -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.0</version>
+                </plugin>
+
+                <!-- Attach Javadoc-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+
+                <!-- Sign the artifacts -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+
+                <!-- Release to Maven Central -->
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.13</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!-- Build plugins -->
         <plugins>
-            <!-- -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.0</version>
             </plugin>
 
             <!-- Unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
             </plugin>
 
             <!-- Integration tests-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.1.2</version>
                 <executions>
                     <execution>
                         <goals>
@@ -245,23 +301,10 @@
                 </executions>
             </plugin>
 
-            <!-- Release to Maven Central (staging) -->
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                </configuration>
-            </plugin>
-
             <!-- Attach sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -276,7 +319,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.5.0</version>
                 <configuration>
                     <source>8</source>
                 </configuration>
@@ -294,7 +336,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.1.0</version>
                 <configuration>
                     <skip>${skip.sign}</skip>
                 </configuration>
@@ -307,6 +348,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Release to Maven Central (staging) -->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                </configuration>
             </plugin>
         </plugins>
     </build>

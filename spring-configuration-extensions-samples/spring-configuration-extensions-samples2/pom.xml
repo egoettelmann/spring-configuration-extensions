@@ -61,13 +61,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>2.7.3</version>
+                            <version>${spring-boot.version}</version>
                         </annotationProcessorPath>
                         <annotationProcessorPath>
                             <groupId>com.github.egoettelmann</groupId>
