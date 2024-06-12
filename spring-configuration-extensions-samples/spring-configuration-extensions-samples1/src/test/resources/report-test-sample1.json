@@ -2,7 +2,7 @@
   "artifacts" : [ {
     "groupId" : "com.github.egoettelmann",
     "artifactId" : "spring-configuration-extensions-samples1",
-    "version" : "0.1.6-SNAPSHOT",
+    "version" : "0.1.7-SNAPSHOT",
     "name" : "Spring Configuration Extensions: Samples - Sample 1",
     "description" : "Samples for illustrating Spring Configuration Extensions and performing tests",
     "properties" : [ {
@@ -45,6 +45,17 @@
         "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Config2"
       } ]
     }, {
+      "name" : "sample1.new.conf",
+      "type" : "java.lang.String",
+      "description" : "Custom config value injected by @Value.\n",
+      "defaultValue" : null,
+      "profiles" : null,
+      "sourceTypes" : [ {
+        "groupId" : "com.github.egoettelmann",
+        "artifactId" : "spring-configuration-extensions-samples1",
+        "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Config"
+      } ]
+    }, {
       "name" : "sample1.unicode.chars",
       "type" : "java.lang.String",
       "description" : "Config including unicode characters.\n",
@@ -59,6 +70,11 @@
         "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Config"
       } ]
     } ],
-    "changes" : null
+    "changes" : {
+      "baseVersion" : "0.1.6",
+      "added" : [ "sample1.new.conf" ],
+      "updated" : [ ],
+      "deleted" : [ ]
+    }
   } ]
 }

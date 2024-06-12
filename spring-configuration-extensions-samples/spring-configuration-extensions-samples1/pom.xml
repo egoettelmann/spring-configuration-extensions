@@ -69,7 +69,12 @@
                             <groupId>${project.groupId}</groupId>
                         </dependencyMatcher>
                     </includeDependencies>
+                    <changes>
+                        <!-- List changes compared to following version -->
+                        <baseVersion>0.1.6</baseVersion>
+                    </changes>
                     <outputReports>
+                        <!-- Output reports in all available formats -->
                         <outputReport>
                             <type>json</type>
                         </outputReport>

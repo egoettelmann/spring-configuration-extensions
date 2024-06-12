@@ -9,8 +9,8 @@
         <version>0.1.7-SNAPSHOT</version>
     </parent>
 
-    <artifactId>spring-configuration-extensions-samples2</artifactId>
-    <name>Spring Configuration Extensions: Samples - Sample 2</name>
+    <artifactId>spring-configuration-extensions-samples3</artifactId>
+    <name>Spring Configuration Extensions: Samples - Sample 3</name>
 
     <dependencies>
         <!-- Spring Boot -->
@@ -57,53 +57,17 @@
 
     <build>
         <plugins>
-            <!-- Configure annotation processors -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <annotationProcessorPath>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-configuration-processor</artifactId>
-                            <version>${spring-boot.version}</version>
-                        </annotationProcessorPath>
-                        <annotationProcessorPath>
-                            <groupId>com.github.egoettelmann</groupId>
-                            <artifactId>spring-value-annotation-processor</artifactId>
-                            <version>${project.version}</version>
-                        </annotationProcessorPath>
-                    </annotationProcessorPaths>
-                    <compilerArgs>
-                        <!-- Will fail on any error and specifies custom metadata output file -->
-                        <arg>-AfailOnError=true</arg>
-                        <arg>-AmetadataOutputFile=META-INF/additional4value-spring-configuration-metadata.json</arg>
-                    </compilerArgs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!-- Sample configuration -->
             <plugin>
                 <groupId>com.github.egoettelmann</groupId>
                 <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
                 <version>${project.version}</version>
                 <configuration>
-                    <additionalMetadataFiles>
-                        <!-- Specifies additional configuration metadata file -->
-                        <metadataFile>/META-INF/additional4value-spring-configuration-metadata.json</metadataFile>
-                    </additionalMetadataFiles>
-                    <outputReports>
-                        <!-- Output report in JSON format into custom location -->
-                        <outputReport>
-                            <type>json</type>
-                            <outputFile>${project.build.directory}/configurations.json</outputFile>
-                        </outputReport>
-                    </outputReports>
+                    <changes>
+                        <!-- Specify custom file to compute changes against -->
+                        <baseVersion>develop</baseVersion>
+                        <baseFilePath>${project.basedir}/src/main/resources/base-aggregation.json</baseFilePath>
+                    </changes>
                 </configuration>
                 <executions>
                     <execution>

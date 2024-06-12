@@ -27,6 +27,13 @@
       "description": "Config including unicode characters.\n",
       "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Config",
       "defaultValue": null
+    },
+    {
+      "name": "sample1.new.conf",
+      "type": "java.lang.String",
+      "description": "Custom config value injected by @Value.\n",
+      "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Config",
+      "defaultValue": null
     }
   ]
 }

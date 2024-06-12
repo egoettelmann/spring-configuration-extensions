@@ -118,6 +118,18 @@ public class DefaultRepositoryService implements RepositoryService {
         }
     }
 
+    @Override
+    public Artifact resolveVersion(MavenProject project, String version) throws OperationFailedException {
+        try {
+            final DefaultArtifact previousArtifact = this.defaultArtifact(project, version);
+            final ArtifactRequest artifactRequest = new ArtifactRequest(previousArtifact, project.getRemoteProjectRepositories(), null);
+            final ArtifactResult artifactResult = this.repoSystem.resolveArtifact(this.repoSession, artifactRequest);
+            return artifactResult.getArtifact();
+        } catch (final ArtifactResolutionException e) {
+            throw new OperationFailedException("Failed to retrieve artifact for version " + version, e);
+        }
+    }
+
     private Optional<Version> findLatestStable(final List<Version> versions, final MavenProject project) {
         this.log.debug("Finding latest stable version before " + project.getVersion());
         final Semver projectVersion = new Semver(project.getVersion(), Semver.SemverType.LOOSE);

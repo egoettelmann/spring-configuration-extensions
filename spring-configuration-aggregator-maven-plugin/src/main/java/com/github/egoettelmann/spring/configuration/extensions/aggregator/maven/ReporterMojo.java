@@ -11,6 +11,7 @@ import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.AggregationService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.ReportingService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
+import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.ChangesOptions;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.dto.OutputReport;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.AggregatedPropertyMetadata;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.model.ArtifactMetadata;
@@ -35,6 +36,12 @@ public class ReporterMojo extends AbstractPluginMojo {
      */
     @Parameter()
     private List<OutputReport> outputReports;
+
+    /**
+     * Options for the changes computation
+     */
+    @Parameter()
+    private ChangesOptions changes;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -74,7 +81,7 @@ public class ReporterMojo extends AbstractPluginMojo {
 
             // Generating reports
             final List<AggregatedPropertyMetadata> aggregate = aggregationService.load();
-            final ArtifactMetadata metadata = reportingService.report(aggregate);
+            final ArtifactMetadata metadata = reportingService.report(aggregate, this.changes);
 
             // Generating reports
             for (final OutputReport outputReport : this.getOutputReports()) {

@@ -72,6 +72,7 @@ The plugin can be configured through following properties:
 | `additionalMetadataFiles` | `List<MetadataFile>`      | Specifies a list of json files to retrieve additional configuration metadata from.                                  |
 | `profiles`                | `String`                  | Comma separated list of Spring profiles to include values for.                                                      |
 | `outputReports`           | `List<OutputReport>`      | Specifies a list of reports to generate.                                                                            |
+| `changes`                 | `ChangesOptions`          | Options for computing configuration changes.                                                                        |
 
 The `DependencyMatcher` type is defined with following properties:
 
@@ -102,6 +103,14 @@ The `OutputReport` type is defined with following properties:
 | `outputFile`   | `String` | The path to the file to generate.                   |
 
 For detailed explanations regarding the configuration of `OutputReport`, see the `report` goal below.
+
+The `ChangesOptions` type is defined with following properties:
+
+| Property       | Type      | Description                                                                 |
+|----------------|-----------|-----------------------------------------------------------------------------|
+| `skip`         | `boolean` | Allows to skip the changes computation.                                     |
+| `baseVersion`  | `String`  | The version to compute the changes against.                                 |
+| `baseFilePath` | `String`  | The path to a aggregated property metadata file to compute changes against. |
 
 ### Additional goal: `report`
 

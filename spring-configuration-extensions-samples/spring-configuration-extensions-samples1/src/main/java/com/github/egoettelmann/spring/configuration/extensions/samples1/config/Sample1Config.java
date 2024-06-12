@@ -22,4 +22,10 @@ public class Sample1Config {
     @Value("${sample1.unicode.chars}")
     private String unicodeChars;
 
+    /**
+     * Custom config value injected by @Value.
+     */
+    @Value("${sample1.new.conf}")
+    private String newConfig;
+
 }

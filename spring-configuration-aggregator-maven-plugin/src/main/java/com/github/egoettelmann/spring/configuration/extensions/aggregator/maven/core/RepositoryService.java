@@ -12,4 +12,6 @@ public interface RepositoryService {
 
     Artifact resolvePreviousStableVersion(final MavenProject project) throws OperationFailedException;
 
+    Artifact resolveVersion(final MavenProject project, final String version) throws OperationFailedException;
+
 }

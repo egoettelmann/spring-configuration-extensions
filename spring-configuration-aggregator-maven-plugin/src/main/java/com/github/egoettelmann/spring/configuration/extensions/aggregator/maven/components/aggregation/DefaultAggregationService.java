@@ -117,6 +117,11 @@ public class DefaultAggregationService implements AggregationService {
     }
 
     @Override
+    public List<AggregatedPropertyMetadata> load(final String filePath) throws MetadataFileNotFoundException {
+        return this.aggregatedPropertiesMetadataReader.read(FilePath.getPath(filePath));
+    }
+
+    @Override
     public void save(final List<AggregatedPropertyMetadata> aggregatedProperties) throws OperationFailedException {
         final String aggregatedFilePath = FilePath.getPath(this.project.getBuild().getOutputDirectory() + AGGREGATED_FILE);
 

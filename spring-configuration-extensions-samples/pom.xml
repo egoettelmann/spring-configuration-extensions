@@ -21,6 +21,7 @@
     <modules>
         <module>spring-configuration-extensions-samples1</module>
         <module>spring-configuration-extensions-samples2</module>
+        <module>spring-configuration-extensions-samples3</module>
     </modules>
 
     <dependencyManagement>
