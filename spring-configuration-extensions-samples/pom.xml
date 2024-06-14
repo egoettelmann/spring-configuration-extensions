@@ -15,7 +15,7 @@
     <description>Samples for illustrating Spring Configuration Extensions and performing tests</description>
 
     <properties>
-        <spring-boot.version>2.7.3</spring-boot.version>
+        <spring-boot.version>3.3.0</spring-boot.version>
     </properties>
 
     <modules>

@@ -52,13 +52,13 @@
 
     <!-- Properties -->
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependencies versions -->
-        <maven.version>3.8.6</maven.version>
-        <maven-plugin.version>3.6.4</maven-plugin.version>
+        <maven.version>3.9.7</maven.version>
+        <maven-plugin.version>3.13.1</maven-plugin.version>
         <maven-project.version>2.2.1</maven-project.version>
         <jackson.version>2.13.3</jackson.version>
         <snakeyaml.version>1.30</snakeyaml.version>
@@ -68,7 +68,7 @@
         <apache-commons.version>3.11</apache-commons.version>
 
         <!-- Compile dependencies versions -->
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.32</lombok.version>
 
         <!-- Test dependencies versions -->
         <junit.version>5.7.1</junit.version>

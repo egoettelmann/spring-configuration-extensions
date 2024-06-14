@@ -19,7 +19,7 @@ import java.util.Set;
 
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
 @SupportedOptions({ValueAnnotationProcessor.ARG_FAIL_ON_ERROR, ValueAnnotationProcessor.ARG_METADATA_OUTPUT_FILE})
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_21)
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
     public static final String ARG_FAIL_ON_ERROR = "failOnError";
