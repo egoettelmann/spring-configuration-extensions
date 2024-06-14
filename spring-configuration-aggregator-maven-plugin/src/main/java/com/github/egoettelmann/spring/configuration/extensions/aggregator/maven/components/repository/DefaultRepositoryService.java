@@ -3,6 +3,7 @@ package com.github.egoettelmann.spring.configuration.extensions.aggregator.maven
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.RepositoryService;
 import com.github.egoettelmann.spring.configuration.extensions.aggregator.maven.core.exceptions.OperationFailedException;
 import com.vdurmont.semver4j.Semver;
+import com.vdurmont.semver4j.SemverException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.*;
@@ -141,7 +142,13 @@ public class DefaultRepositoryService implements RepositoryService {
                 this.log.debug("Version " + version + " is blank");
                 continue;
             }
-            final Semver semVersion = new Semver(version.toString(), Semver.SemverType.LOOSE);
+            final Semver semVersion;
+            try {
+                semVersion = new Semver(version.toString(), Semver.SemverType.LOOSE);
+            }  catch (final SemverException e) {
+                this.log.warn("Version " + version + " is not a valid semver: " + e.getMessage());
+                continue;
+            }
             if (!semVersion.isStable()) {
                 // Version not stable: ignoring
                 this.log.debug("Version " + version + " is not stable");
