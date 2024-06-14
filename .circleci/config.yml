@@ -4,7 +4,7 @@ version: 2.1
 parameters:
   docker-image:
     type: string
-    default: "cimg/openjdk:8.0"
+    default: "cimg/openjdk:21.0.2"
   branch-release:
     type: string
     default: "release"
