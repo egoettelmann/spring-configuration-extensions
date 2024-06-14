@@ -2,7 +2,7 @@
   "artifacts" : [ {
     "groupId" : "com.github.egoettelmann",
     "artifactId" : "spring-configuration-extensions-samples3",
-    "version" : "0.1.7-SNAPSHOT",
+    "version" : "0.2.0-SNAPSHOT",
     "name" : "Spring Configuration Extensions: Samples - Sample 3",
     "description" : "Samples for illustrating Spring Configuration Extensions and performing tests",
     "properties" : [ {
