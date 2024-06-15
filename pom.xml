@@ -7,7 +7,7 @@
     <groupId>com.github.egoettelmann</groupId>
     <artifactId>spring-configuration-extensions</artifactId>
     <packaging>pom</packaging>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <name>Spring Configuration Extensions</name>
     <description>Extensions for Spring Configurations management</description>
 
@@ -366,7 +366,6 @@
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                     <autoPublish>true</autoPublish>
-                    <waitUntil>published</waitUntil>
                 </configuration>
             </plugin>
         </plugins>
