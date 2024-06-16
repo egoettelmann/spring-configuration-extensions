@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.egoettelmann</groupId>
+        <artifactId>spring-configuration-extensions-samples</artifactId>
+        <version>0.2.0</version>
+    </parent>
+
+    <artifactId>spring-configuration-extensions-samples4</artifactId>
+    <name>Spring Configuration Extensions: Samples - Sample 4</name>
+
+    <dependencies>
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Build dependencies -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.egoettelmann</groupId>
+            <artifactId>spring-value-annotation-processor</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.egoettelmann</groupId>
+            <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
+            <type>maven-plugin</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.java-json-tools</groupId>
+            <artifactId>json-patch</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Sample configuration -->
+            <plugin>
+                <groupId>com.github.egoettelmann</groupId>
+                <artifactId>spring-configuration-aggregator-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <includeDependencies>
+                        <dependencyMatcher>
+                            <groupId>${project.groupId}</groupId>
+                        </dependencyMatcher>
+                    </includeDependencies>
+                    <outputReports>
+                        <outputReport>
+                            <type>html</type>
+                        </outputReport>
+                    </outputReports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>aggregate</goal>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
