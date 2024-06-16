@@ -35,6 +35,7 @@ public class HtmlReportWriter extends AbstractReportWriter {
         // Configuring Freemarker
         final Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setDefaultEncoding("UTF-8");
+        cfg.setBooleanFormat("c");
         cfg.setLocale(Locale.US);
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
