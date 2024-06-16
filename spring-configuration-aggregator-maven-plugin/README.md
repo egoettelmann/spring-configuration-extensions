@@ -87,6 +87,7 @@ To load additional default values (not defined in annotations), configuration fi
 Supported file types are: `.properties`, `.yml` and `.yaml`.
 By default, following files are loaded:
 - `${project.baseDir}/src/main/resources/application.yml`
+- `${project.baseDir}/src/main/resources/application.yaml`
 - `${project.baseDir}/src/main/resources/application.properties`
 
 The `MetadataFile` type is a string defining a file path.

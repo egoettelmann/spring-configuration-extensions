@@ -93,6 +93,7 @@ public class AggregatorMojo extends AbstractPluginMojo {
         final List<PropertiesFile> files = new ArrayList<>();
         final String resourcesFolder = this.project.getBasedir() + "/src/main/resources";
         files.add(new PropertiesFile(resourcesFolder + "/application.yml"));
+        files.add(new PropertiesFile(resourcesFolder + "/application.yaml"));
         files.add(new PropertiesFile(resourcesFolder + "/application.properties"));
         return files;
     }
