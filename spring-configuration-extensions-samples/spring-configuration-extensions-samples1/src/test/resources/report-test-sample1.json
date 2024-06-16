@@ -2,10 +2,21 @@
   "artifacts" : [ {
     "groupId" : "com.github.egoettelmann",
     "artifactId" : "spring-configuration-extensions-samples1",
-    "version" : "0.2.0-SNAPSHOT",
+    "version" : "0.2.1-SNAPSHOT",
     "name" : "Spring Configuration Extensions: Samples - Sample 1",
     "description" : "Samples for illustrating Spring Configuration Extensions and performing tests",
     "properties" : [ {
+      "name" : "sample1.app.bool",
+      "type" : "java.lang.Boolean",
+      "description" : "Boolean value without any default value",
+      "defaultValue" : false,
+      "profiles" : null,
+      "sourceTypes" : [ {
+        "groupId" : "com.github.egoettelmann",
+        "artifactId" : "spring-configuration-extensions-samples1",
+        "sourceType" : "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Properties"
+      } ]
+    }, {
       "name" : "sample1.app.title",
       "type" : "java.lang.String",
       "description" : "Sample app title injected through @ConfigurationProperties",
@@ -72,7 +83,7 @@
     } ],
     "changes" : {
       "baseVersion" : "0.1.6",
-      "added" : [ "sample1.new.conf" ],
+      "added" : [ "sample1.new.conf", "sample1.app.bool" ],
       "updated" : [ ],
       "deleted" : [ ]
     }
