@@ -15,7 +15,7 @@ public class Sample1Properties {
    private String title;
 
    /**
-    * Boolean value without any default value
+    * Boolean value without any explicit default value
     */
    private boolean bool;
 

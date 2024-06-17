@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Data holder for the metadata of a property.
+ */
 @Data
 public class PropertyMetadata {
 
@@ -13,6 +16,9 @@ public class PropertyMetadata {
     private Object defaultValue;
     private String sourceType;
 
+    /**
+     * Wrapper to holder a list of metadata
+     */
     @Data
     public static class Wrapper {
         private List<PropertyMetadata> properties;

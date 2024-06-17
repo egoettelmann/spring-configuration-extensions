@@ -17,13 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Annotation processor that collects all {@code org.springframework.beans.factory.annotation.Value}.
+ */
 @SupportedAnnotationTypes(ElementReader.VALUE_ANNOTATION_CLASS)
 @SupportedOptions({ValueAnnotationProcessor.ARG_FAIL_ON_ERROR, ValueAnnotationProcessor.ARG_METADATA_OUTPUT_FILE})
 @SupportedSourceVersion(SourceVersion.RELEASE_21)
 public class ValueAnnotationProcessor extends AbstractProcessor {
 
+    /**
+     * The options flag to trigger build failures on processing errors.
+     */
     public static final String ARG_FAIL_ON_ERROR = "failOnError";
 
+    /**
+     * The options flag to specify a custom output file.
+     */
     public static final String ARG_METADATA_OUTPUT_FILE = "metadataOutputFile";
 
     private static final String TARGET_PACKAGE = "";
@@ -33,6 +42,13 @@ public class ValueAnnotationProcessor extends AbstractProcessor {
     private String metadataOutputFile = "META-INF/additional-spring-configuration-metadata.json";
 
     private ElementReader elementReader;
+
+    /**
+     * Instantiates the processor
+     */
+    public ValueAnnotationProcessor() {
+        super();
+    }
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {

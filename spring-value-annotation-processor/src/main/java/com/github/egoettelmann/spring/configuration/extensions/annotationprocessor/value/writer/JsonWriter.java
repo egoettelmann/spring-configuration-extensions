@@ -6,10 +6,19 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
+/**
+ * Utility class to write JSON.
+ * This class is mainly used to prevent relying on any external dependency.
+ */
 public class JsonWriter {
 
     private final Writer writer;
 
+    /**
+     * Instantiates the writer.
+     *
+     * @param writer the writer to write the output to
+     */
     public JsonWriter(Writer writer) {
         this.writer = writer;
     }
@@ -49,7 +58,14 @@ public class JsonWriter {
         }
     }
 
-    public void write(final String key, final String value) throws IOException {
+    /**
+     * Naive JSON writer to prevent using any external dependency.
+     *
+     * @param key the key
+     * @param value the value
+     * @throws IOException thrown on any writing failure
+     */
+    private void write(final String key, final String value) throws IOException {
         if (value == null) {
             this.writer.write(String.format("\"%s\": null", key));
             return;

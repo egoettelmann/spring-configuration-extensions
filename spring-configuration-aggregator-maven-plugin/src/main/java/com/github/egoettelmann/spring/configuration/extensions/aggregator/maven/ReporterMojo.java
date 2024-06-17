@@ -43,6 +43,13 @@ public class ReporterMojo extends AbstractPluginMojo {
     @Parameter()
     private ChangesOptions changes;
 
+    /**
+     * Instantiates the reporter MOJO
+     */
+    public ReporterMojo() {
+        super();
+    }
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         if (this.skip) {

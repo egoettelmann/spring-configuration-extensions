@@ -10,7 +10,7 @@
     {
       "name": "sample1.app.bool",
       "type": "java.lang.Boolean",
-      "description": "Boolean value without any default value",
+      "description": "Boolean value without any explicit default value",
       "sourceType": "com.github.egoettelmann.spring.configuration.extensions.samples1.config.Sample1Properties",
       "defaultValue": false
     },

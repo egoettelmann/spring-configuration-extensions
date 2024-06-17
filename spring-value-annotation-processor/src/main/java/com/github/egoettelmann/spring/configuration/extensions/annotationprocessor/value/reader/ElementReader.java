@@ -14,18 +14,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * A reader class to extract the value annotation metadata from a given {@link Element}.
+ */
 public class ElementReader {
 
+    /**
+     * The value annotation class to process
+     */
     public static final String VALUE_ANNOTATION_CLASS = "org.springframework.beans.factory.annotation.Value";
 
     private static final String VALUE_ANNOTATION_PARAM = "value";
 
     private final Elements elementUtils;
 
+    /**
+     * Instantiates the reader.
+     *
+     * @param elementUtils the utils class to interact with the element context
+     */
     public ElementReader(final Elements elementUtils) {
         this.elementUtils = elementUtils;
     }
 
+    /**
+     * Extracts the value annotation metadata from the given element.
+     *
+     * @param element the element to read
+     * @return the list of value annotation metadata
+     */
     public List<ValueAnnotationMetadata> read(final Element element) {
         try {
             return ValueAnnotationMetadataBuilder.of(this.extractValue(element))

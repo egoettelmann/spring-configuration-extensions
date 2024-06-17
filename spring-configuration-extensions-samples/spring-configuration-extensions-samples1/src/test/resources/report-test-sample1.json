@@ -8,7 +8,7 @@
     "properties" : [ {
       "name" : "sample1.app.bool",
       "type" : "java.lang.Boolean",
-      "description" : "Boolean value without any default value",
+      "description" : "Boolean value without any explicit default value",
       "defaultValue" : false,
       "profiles" : null,
       "sourceTypes" : [ {

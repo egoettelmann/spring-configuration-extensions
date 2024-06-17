@@ -14,6 +14,12 @@ public class ValueAnnotationParser {
     private final String opposingSuffix = "{";
 
     /**
+     * Instantiates the parser
+     */
+    public ValueAnnotationParser() {
+    }
+
+    /**
      * Parses a value and returns a map of properties found, with:
      * - the key being the property
      * - the value being the default value (can be null)
